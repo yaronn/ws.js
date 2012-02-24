@@ -42,7 +42,7 @@ module.exports = {
     s.send(ctx)
 	},
 
-	"usename token generated correctly": function (test) {		
+  "usename token generated correctly": function (test) {		
     test.expect(4)
     var Mock = function(test, version) {
       this.send = function(ctx) {                                             

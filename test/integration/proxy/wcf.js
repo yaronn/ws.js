@@ -48,7 +48,7 @@ module.exports = {
     wcf_utils.soapTest(test, proxy)
 	},
 
-	"basic clearUsername": function (test) {		
+  "basic clearUsername": function (test) {		
     var binding = new wcf.BasicHttpBinding({
         SecurityMode:"TransportWithMessageCredential"
         , MessageClientCredentialType: "UserName"

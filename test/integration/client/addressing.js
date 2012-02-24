@@ -25,5 +25,5 @@ module.exports = {
       new ws.Http()					
     ];
     utils.soapTest.call(this, test, "soap12wsa10", "soap12", handlers );
-	},
+  },
 }

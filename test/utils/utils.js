@@ -23,16 +23,16 @@ exports.soapTest = function(test, endpoint, version, handlers, validator) {
     "http://www.w3.org/2003/05/soap-envelope"
 	  , request = "<Envelope xmlns='"+ns+"'>" +
                   "<Header />" +
-			             "<Body>" +
-				            "<GetData xmlns='http://tempuri.org/'>" +
-					           "<value>123</value>" +
-				            "</GetData>" +
-			             "</Body>" +
-	             "</Envelope>"
-  var ctx = 	{ request: request
-		          , url: "http://localhost:7171/Service/" + endpoint
-		          , action: "http://tempuri.org/IService/GetData"
-		          , contentType: version == "soap11" ? "text/xml" : " application/soap+xml; charset=utf-8"
+                   "<Body>" +
+                    "<GetData xmlns='http://tempuri.org/'>" +
+                      "<value>123</value>" +
+                    "</GetData>" +
+                  "</Body>" +
+              "</Envelope>"
+  var ctx =   { request: request
+              , url: "http://localhost:7171/Service/" + endpoint
+              , action: "http://tempuri.org/IService/GetData"
+              , contentType: version == "soap11" ? "text/xml" : " application/soap+xml; charset=utf-8"
 	}
 
   ws.send(handlers,	ctx, function(ctx) {  				    			

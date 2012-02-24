@@ -50,6 +50,5 @@ module.exports = {
                          "attachment 2 is not the txt file")	
         test.done()
     })
-				
   },
 }

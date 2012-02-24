@@ -10,7 +10,7 @@ var fs = require('fs')
 
 module.exports = {
 
-	"mime writer correctly writes attachments": function (test) {        				
+  "mime writer correctly writes attachments": function (test) {        				
     var parts = 
     [
       {
@@ -139,7 +139,7 @@ module.exports = {
     var m = new MtomHandler()
     m.next = new Mock()
     m.send(ctx, function(ctx) {})
- },
+  },
 
   "behave correctly when there are no attachments": function(test) {
     var ctx = { request: "<x>123</x>"
@@ -160,9 +160,9 @@ module.exports = {
       }
     }
 
-   var m = new MtomHandler()
-   m.next = new Mock()
-   m.send(ctx, function(ctx) {})
+    var m = new MtomHandler()
+    m.next = new Mock()
+    m.send(ctx, function(ctx) {})
   },
 
   "correctly calls next handler": function(test) {
@@ -176,7 +176,7 @@ module.exports = {
   var m = new MtomHandler()
   m.next = new Mock()      
   m.send({request: "<x></x>"})              
-},
+  },
 
   "handler correctly reads attachments from response": function(test) {
 

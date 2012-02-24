@@ -3,7 +3,7 @@ var wcf = require('../../../lib/proxies/wcf.js')
 
 module.exports = {
 
-	"basic http binding correctly translates to custom binding when there are settings": function (test) {        				
+  "basic http binding correctly translates to custom binding when there are settings": function (test) {        				
     var b = new wcf.BasicHttpBinding({
       SecurityMode:"TransportWithMessageCredential", 
       MessageClientCredentialType: "UserName",
@@ -20,7 +20,7 @@ module.exports = {
     test.done()
 	},
 
-	"basic http binding correctly translates to custom binding when there are no settings": function (test) {
+  "basic http binding correctly translates to custom binding when there are no settings": function (test) {
     var b = new wcf.BasicHttpBinding({})
     var c = b.getCustomBinding()
     test.equal(2, c.channels.length, "wrong number of channels")		
@@ -56,7 +56,7 @@ module.exports = {
     test.done()
 	},
 
-	"custom binding correctly translated to handlers when there is addressing and security": function(test) {
+  "custom binding correctly translated to handlers when there is addressing and security": function(test) {
     var binding = new wcf.CustomBinding([
       new wcf.SecurityBindingElement({AuthenticationMode: "UserNameOverTransport"}),
       new wcf.MtomMessageEncodingBindingElement({MessageVersion: "Soap11WSAddressingAugust2004"}),
@@ -82,7 +82,7 @@ module.exports = {
     test.done()
 	},
 
-	"custom binding correctly translated to handlers when there is only http channel": function(test) {
+  "custom binding correctly translated to handlers when there is only http channel": function(test) {
     var binding = new wcf.CustomBinding([new wcf.HttpTransportBindingElement()])		
     var handlers = binding.getHandlers()
     test.equal(1, handlers.length, "wrong number of handlers")

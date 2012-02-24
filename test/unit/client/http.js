@@ -61,7 +61,7 @@ module.exports = {
     h.send(ctx, function(ctx) {})
   },
 
-	"correctly sends default headers": function (test) {        
+  "correctly sends default headers": function (test) {        
     test.expect(2)
     var action = "MyAction"
       , contentType = "text/xml"

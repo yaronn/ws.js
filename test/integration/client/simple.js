@@ -17,9 +17,7 @@ module.exports = {
 
   "simple service with handler": function (test) {   
     var Mock = function(next) {	
-      
       this.next = next
-
       this.send = function(ctx, callback) {                                             
         var self = this	
         ctx.request = ctx.request.replace(/123/, "456")

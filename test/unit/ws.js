@@ -4,7 +4,7 @@ var ws = require('../../lib/ws.js')
 
 module.exports = {
 
-	"ws adds soap header when does not exist using namespace prefix": function (test) {
+  "ws adds soap header when does not exist using namespace prefix": function (test) {
     test.expect(2)
     var mock = function() {
       
@@ -17,12 +17,11 @@ module.exports = {
       }	
     }
     ctx = {request: 
-      '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body />'
-      + '</s:Envelope>'}
+      '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body /></s:Envelope>'}
     ws.send([new mock()], ctx, function() {})
 	},
 
-	"ws adds soap header when does not exist using default namespace": function (test) {
+  "ws adds soap header when does not exist using default namespace": function (test) {
     test.expect(2)
     var mock = function() {
       this.send = function(ctx, callback) {
