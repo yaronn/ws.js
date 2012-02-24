@@ -20,5 +20,13 @@ function nodeCallback(test, doc, ns, local, callback)
     callback(node[0]);
 }
 
+function xpathCallback(test, doc, xpath, callback)
+{
+    var node = select(doc, xpath);
+    test.ok(node.length==1, "xpath: " + xpath + " not found");
+    callback(node[0]);
+}
+
 exports.nodeEquals = nodeEquals;
 exports.nodeCallback = nodeCallback;
+exports.xpathCallback = xpathCallback;

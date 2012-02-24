@@ -13,9 +13,9 @@ module.exports = {
                                         
                 xml_assert.nodeEquals(test, doc, version, "Action", ctx.action);
                                       
-                 xml_assert.nodeEquals(test, doc, version, "To", ctx.url);
+                xml_assert.nodeEquals(test, doc, version, "To", ctx.url);
                     
-                 xml_assert.nodeCallback(test, doc, version, "ReplyTo", 
+                xml_assert.nodeCallback(test, doc, version, "ReplyTo", 
                         
                         function(node) {
                             var addr = node.firstChild;

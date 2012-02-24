@@ -30,7 +30,6 @@ exports.soapTest = function(test, endpoint, version, handlers, validator)
 {	
 	test.expect(2);
 
-
 	var ns = version == "soap11" ? 
 			"http://schemas.xmlsoap.org/soap/envelope/" : 
 			"http://www.w3.org/2003/05/soap-envelope";
@@ -52,6 +51,9 @@ exports.soapTest = function(test, endpoint, version, handlers, validator)
 		contentType: version == "soap11" ? "text/xml" : " application/soap+xml; charset=utf-8"
 	};	
 	
+
+
+
 	ws.send(
 		handlers,	
 		ctx, 

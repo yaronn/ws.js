@@ -11,3 +11,5 @@ C:\Users\naveh\Documents\features\projects\node-soap-ws-addressing\test\integrat
 C:\Users\naveh\Documents\features\projects\node-soap-ws-addressing\test\integration\working-services\service-c#\service\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\naveh\Documents\features\projects\node-soap-ws-addressing\test\integration\working-services\service-c#\service\bin\Debug\service.exe
 C:\Users\naveh\Documents\features\projects\node-soap-ws-addressing\test\integration\working-services\service-c#\service\bin\Debug\service.pdb
+C:\Users\naveh\Documents\features\projects\node-soap-ws-addressing\test\integration\working-services\service-c#\service\bin\Debug\ClearUsernameBinding.dll
+C:\Users\naveh\Documents\features\projects\node-soap-ws-addressing\test\integration\working-services\service-c#\service\bin\Debug\ClearUsernameBinding.pdb

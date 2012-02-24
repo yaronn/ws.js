@@ -33,7 +33,7 @@ namespace webservices20.blogspot.com
             Console.WriteLine();
             Console.WriteLine();
 
-
+            
             Console.WriteLine("Opening service...\r\n");
             try
             {
