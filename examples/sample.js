@@ -8,7 +8,7 @@ var ws = require('./lib/ws.js')
 									"</EchoString>" +
 								"</Body>" +
 						"</Envelope>"
-			,	url: "http://vmftqa32.devlab.ad/WebServices/Yaron/MyWebServices/Services/SimpleService.asmx"
+			,	url: "http://localhost/service"
 			,	action: "http://tempuri.org/EchoString"
 				contentType: "text/xml" 
 			}

@@ -21,7 +21,7 @@ module.exports = {
                 xml_assert.xpathCallback(test, doc, "//o:Security/u:Timestamp/u:Created",                     
                     function(node) {
                     	var d = Date.parse(node.firstChild.data);
-                    	var min = utils.dateDiff_InMin(new Date(), d);
+                    	var min = utils.dateDiffInMin(new Date(), d);
                     	if (min>2)
                     		test.fail("created time not valid. diff from now is: " + min);                        
                     }
@@ -30,7 +30,7 @@ module.exports = {
                  xml_assert.xpathCallback(test, doc, "//o:Security/u:Timestamp/u:Expires",                     
                     function(node) {
                     	var d = Date.parse(node.firstChild.data);
-                    	var min = utils.dateDiff_InMin(new Date(), d);
+                    	var min = utils.dateDiffInMin(new Date(), d);
                     	if (min<4 || min>10)
                     		test.fail("expiary time not valid. diff from now is: " + min);                        
                     }
