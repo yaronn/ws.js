@@ -15,14 +15,11 @@ var	CustomBinding = require('../lib/proxies/wcf.js').CustomBinding
 				'</EchoFiles>' +
 			'</s:Body>' +
 	'</s:Envelope>'
-  , binding = new CustomBinding([new MtomMessageEncodingBindingElement({
-	  									MessageVersion: "Soap12WSAddressing10"}),
+  , binding = new CustomBinding([new MtomMessageEncodingBindingElement({MessageVersion: "Soap12WSAddressing10"}),
 								,new HttpTransportBindingElement()
 								])
   , proxy = new Proxy(binding, "http://localhost:7171/Service/mtom")
 
 proxy.addAttachment("//*[local-name(.)='File1']", "./test/unit/client/files/p.jpg");
 proxy.addAttachment("//*[local-name(.)='File2']", "./test/unit/client/files/text.txt");
-
-
 proxy.send(message, "http://tempuri.org/IService/EchoFiles", function(message, ctx) {});
