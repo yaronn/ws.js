@@ -1,6 +1,8 @@
 var BasicHttpBinding = require('../lib/proxies/wcf.js').BasicHttpBinding
   , Proxy = require('../lib/proxies/wcf.js').Proxy
-  , binding = new BasicHttpBinding({SecurityMode:"TransportWithMessageCredential", MessageClientCredentialType: "UserName"});
+  , binding = new BasicHttpBinding({ SecurityMode:"TransportWithMessageCredential"
+                                   , MessageClientCredentialType: "UserName"
+                                   });
   , proxy = new Proxy(binding, "http://localhost:7171/Service/clearUsername")
   , message =  "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
                  "<Header />" +
