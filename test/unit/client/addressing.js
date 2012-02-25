@@ -15,7 +15,7 @@ module.exports = {
             var addr = node.firstChild
             test.ok(addr.localName=="Address" && addr.namespaceURI==version, 
               "ws:Address not found under wsa:ReplyTo")                            
-            var expected = version + "role/anonymous"
+            var expected = version + "/role/anonymous"
             test.equal(addr.firstChild.data, expected,
               "wsa:Address has wrong value. Expected: " + expected 
               + " Actual: " + addr.firstChild.data)

@@ -1,18 +1,16 @@
 ## WS.JS
-
 A WS-* client implementation for node.js. Written in pure javascript!
 
 Currently supports:
 
 * MTOM
-* WS-Security (username tokens only)
+* WS-Security (username tokens only for now)
 * WS-Addressing (all versions)
 * HTTP(S)
 
 For more information visit [my blog](http://webservices20.blogspot.com/).
 
 ## Install
-
 Install with [npm](http://github.com/isaacs/npm):
 
     npm install ws.js
@@ -20,10 +18,10 @@ Install with [npm](http://github.com/isaacs/npm):
 ## Use
 
 ### WS-Security (username)
-    var ws = require('./lib/ws.js')
-    , Http = ws.Http
-    , Security = ws.Security
-    , UsernameToken = ws.UsernameToken
+    var ws = require('ws.js')
+      , Http = ws.Http
+      , Security = ws.Security
+      , UsernameToken = ws.UsernameToken
 
     var request =  '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
                       '<Header />' +
@@ -71,8 +69,7 @@ Install with [npm](http://github.com/isaacs/npm):
     </Body>
   </Envelope>
 
-### MTOM
-    
+### MTOM    
     var ws = require('ws.js')
       , Http = ws.Http
       , Mtom = ws.Mtom
@@ -80,7 +77,7 @@ Install with [npm](http://github.com/isaacs/npm):
     var request = '<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope">' +
                     '<s:Body>' +
                       '<EchoFiles xmlns="http://tempuri.org/">' +                        
-                          '<a:File1 />' +
+                          '<File1 />' +
                       '</EchoFiles>' +
                     '</s:Body>' +
                   '</s:Envelope>'   
@@ -107,13 +104,27 @@ Install with [npm](http://github.com/isaacs/npm):
 
 ==>
 
-    <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">  
-      <s:Body>  
-            <x>  
-                    <y>456</y>  
-            </x>  
-      </s:Body>  
+    --my_unique_boundary
+    Content-ID: <part0>
+    Content-Transfer-Encoding: 8bit
+    Content-Type: application/xop+xml;charset=utf-8;type="application/soap+xml"
+
+    <s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+      <s:Body>
+        <EchoFiles xmlns="http://tempuri.org/">
+          <File1>
+            <xop:Include xmlns:xop="http://www.w3.org/2004/08/xop/include" href="cid:part1" />
+          </File1>
+        </EchoFiles>
+      </s:Body>
+      <s:Header />
     </s:Envelope>
+    --my_unique_boundary
+    Content-ID: <part1>
+    Content-Transfer-Encoding: binary
+    Content-Type: image/jpeg
+
+    [binary here...]
 
 ### WS-Addressing
     var ws = require('ws.js')
@@ -133,7 +144,7 @@ Install with [npm](http://github.com/isaacs/npm):
                , contentType: "text/xml" 
                }
 
-    var handlers =  [ new Addr("http://ws-addressing/v8")
+    var handlers =  [ new Addr("http://schemas.xmlsoap.org/ws/2004/08/addressing")
                     , new Http()
                     ]
 
@@ -143,19 +154,26 @@ Install with [npm](http://github.com/isaacs/npm):
 
 ==>
 
-    <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">  
-      <s:Body>  
-            <x>  
-                    <y>456</y>  
-            </x>  
-      </s:Body>  
-    </s:Envelope>
+    <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+      <Header>
+        <ws:Action>http://tempuri.org/EchoString</ws:Action>
+        <ws:To>http://server/wsa/</ws:To>
+        <ws:MessageID>6c4189e5-60f5-195e-b7ce-4e236d63c379</ws:MessageID>
+        <ws:ReplyTo>
+          <ws:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</ws:Address>
+        </ws:ReplyTo>
+      </Header>
+      <Body>
+        <EchoString xmlns="http://tempuri.org/">
+          <s>123</s>
+        </EchoString>
+      </Body>
+    </Envelope>
 
 ### SSL
 Just specify an http**s** address in any of the previous samples.
 
 ### All together now
-  
     var ws = require('ws.js')
       , Http = ws.Http
       , Addr = ws.Addr
@@ -166,7 +184,7 @@ Just specify an http**s** address in any of the previous samples.
                               "<Header />" +
                                 "<Body>" +
                                   "<EchoString xmlns='http://tempuri.org/'>" +
-                                    "<File 1 />" +
+                                    "<File1 />" +
                                   "</EchoString>" +
                                 "</Body>" +
                             "</Envelope>"
@@ -179,7 +197,7 @@ Just specify an http**s** address in any of the previous samples.
     ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']", 
                       "me.jpg", "image/jpeg")
 
-    var handlers =  [ new Security({}, [new UsernameToken({username: "yaron", password: "1234"})]),
+    var handlers =  [ new Security({}, [new UsernameToken({username: "yaron", password: "1234"})])
                     , new Addr("http://ws-addressing/v8")
                     , new Mtom() //Mtom must be after everything except http
                     , new Http()
