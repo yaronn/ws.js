@@ -4,6 +4,7 @@ A WCF-compatible web service client implementation for node.js. Written in pure 
 **Imagine this:**
     
 (see down in the page for a complete sample)
+
     var binding = new WSHttpBinding(
           { MessageEncoding: "Mtom"
           , SecurityMode:"TransportWithMessageCredential"
