@@ -20,27 +20,28 @@ Install with [npm](http://github.com/isaacs/npm):
 ## Use
 
 ### WS-Security (username)
-    var ws = require('ws.js')
-      , Http = ws.Http
-      , Security = ws.Security
-      , UsernameToken = ws.UsernameToken
+    var ws = require('./lib/ws.js')
+    , Http = ws.Http
+    , Security = ws.Security
+    , UsernameToken = ws.UsernameToken
 
-    var request =  '<Envelope xmlns="'"http://schemas.xmlsoap.org/soap/envelope/">'' +
-                      '<Header /> +
-                        '<Body> +
-                          '<EchoString xmlns="http://tempuri.org/">'' +
-                            '<s>123</s>'' +
-                          '</EchoString>'' +
+    var request =  '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
+                      '<Header />' +
+                        '<Body>' +
+                          '<EchoString xmlns="http://tempuri.org/">' +
+                            '<s>123</s>' +
+                          '</EchoString>' +
                         '</Body>' +
                     '</Envelope>'
 
     var ctx =  { request: request 
-               , url: "http://localhost/service"
+               , url: "http://service/security"
                , action: "http://tempuri.org/EchoString"
                , contentType: "text/xml" 
                }
 
-    var handlers =  [ new Security({}, [new UsernameToken({username: "yaron", password: "1234"})]),
+
+    var handlers =  [ new Security({}, [new UsernameToken({username: "yaron", password: "1234"})])
                     , new Http()
                     ]
 
@@ -50,13 +51,25 @@ Install with [npm](http://github.com/isaacs/npm):
 
 ==>
 
-    <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">  
-      <s:Body>  
-            <x>  
-                    <y>456</y>  
-            </x>  
-      </s:Body>  
-    </s:Envelope>
+    <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+    <Header>
+      <o:Security>
+        <u:Timestamp>
+          <u:Created>2012-02-26T11:03:40Z</u:Created>
+          <u:Expires>2012-02-26T11:08:40Z</u:Expires>
+        </u:Timestamp>
+        <o:UsernameToken>
+          <o:Username>yaron</o:Username>
+          <o:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">1234</o:Password>
+        </o:UsernameToken>
+      </o:Security>
+    </Header>
+    <Body>
+      <EchoString xmlns="http://tempuri.org/">
+        <s>123</s>
+      </EchoString>
+    </Body>
+  </Envelope>
 
 ### MTOM
     
@@ -78,6 +91,7 @@ Install with [npm](http://github.com/isaacs/npm):
               , action: "http://tempuri.org/IService/EchoFiles"
               }
 
+    //add attachment to the soap request
     ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']", 
                     "me.jpg", "image/jpeg")
     
@@ -86,6 +100,7 @@ Install with [npm](http://github.com/isaacs/npm):
                     ];
     
     ws.send(handlers, ctx, function(ctx) {      
+      //read an attachment from the soap response
       var file = ws.getAttachment(ctx, "response", "//*[local-name(.)='File1']")
       fs.writeFileSync("result.jpg", file)      
     })
@@ -112,6 +127,7 @@ Install with [npm](http://github.com/isaacs/npm):
                                   "</EchoString>" +
                                 "</Body>" +
                             "</Envelope>"
+
                , url: "http://localhost/service"
                , action: "http://tempuri.org/EchoString"
                , contentType: "text/xml" 
@@ -154,6 +170,7 @@ Just specify an http**s** address in any of the previous samples.
                                   "</EchoString>" +
                                 "</Body>" +
                             "</Envelope>"
+
                , url: "http://localhost/service"
                , action: "http://tempuri.org/EchoString"
                , contentType: "text/xml" 
