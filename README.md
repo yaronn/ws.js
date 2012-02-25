@@ -4,7 +4,7 @@ A WS-* client implementation for node.js. Written in pure javascript!
 Currently supports:
 
 * MTOM
-* WS-Security (username tokens only for now)
+* WS-Security (username tokens only)
 * WS-Addressing (all versions)
 * HTTP(S)
 
@@ -17,7 +17,7 @@ Install with [npm](http://github.com/isaacs/npm):
 
 ## Use
 
-### WS-Security (username)
+### WS-Security (Username)
     var ws = require('ws.js')
       , Http = ws.Http
       , Security = ws.Security
@@ -189,7 +189,7 @@ Just specify an http**s** address in any of the previous samples.
                                 "</Body>" +
                             "</Envelope>"
 
-               , url: "http://localhost/service"
+               , url: "https://localhost/service"
                , action: "http://tempuri.org/EchoString"
                , contentType: "text/xml" 
                }
