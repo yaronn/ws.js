@@ -1,20 +1,20 @@
 ## WCF.JS
 A WCF-compatible web service client implementation for node.js. Written in pure javascript!
 
-Currently supports a subset of:
+**Currently supports a subset of:**
 
 * BasicHttpBinding
 * WSHttpBinding
 * CustomBinding
 
-The current subset includes:
+**The current subset includes:**
 
 * MTOM / Text encodings
 * WS-Addressing (all versions)
 * Transport Security (SSL)
 * Transport with message credential (Username)
 
-For more information visit [my blog](http://webservices20.blogspot.com/).
+For more information visit my [wcf blog](http://webservices20.blogspot.com/).
 
 ## Install
 Install with [npm](http://github.com/isaacs/npm):
@@ -26,10 +26,10 @@ Install with [npm](http://github.com/isaacs/npm):
 ### BasicHttpBinding (TransportWithMessageCredential)
     var BasicHttpBinding = require('../lib/proxies/wcf.js').BasicHttpBinding
       , Proxy = require('../lib/proxies/wcf.js').Proxy
-      , binding = new BasicHttpBinding(
+      , **binding = new BasicHttpBinding(
             { SecurityMode:"TransportWithMessageCredential"
             , MessageClientCredentialType: "UserName"
-            });
+            })**
       , proxy = new Proxy(binding, "http://localhost:7171/Service/clearUsername")
       , message =  "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
                      "<Header />" +
@@ -42,7 +42,10 @@ Install with [npm](http://github.com/isaacs/npm):
 
     proxy.ClientCredentials.Username.Username = "yaron";
     proxy.ClientCredentials.Username.Password = "1234";
-    proxy.send(message, "http://tempuri.org/IService/GetData", function(message, ctx) {});
+    
+    proxy.send(message, "http://tempuri.org/IService/GetData", function(message, ctx) {
+      console.log(message)
+    });
 
 ### CustomBinding (Mtom + UserNameOverTransport + WSAddressing10)
     var CustomBinding = require('../lib/proxies/wcf.js').CustomBinding
@@ -50,11 +53,11 @@ Install with [npm](http://github.com/isaacs/npm):
       , HttpTransportBindingElement = require('../lib/proxies/wcf.js').HttpTransportBindingElement
       , Proxy = require('../lib/proxies/wcf.js').Proxy
       , fs = require('fs')
-      , binding = new CustomBinding(
+      , **binding = new CustomBinding(
             [ new SecurityBindingElement({AuthenticationMode="UserNameOverTransport"})
             , new MtomMessageEncodingBindingElement({MessageVersion: "Soap12WSAddressing10"}),
             , new HttpTransportBindingElement()
-            ])
+            ])**
       , proxy = new Proxy(binding, "http://localhost:7171/Service/mtom")
       , message = '<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope">' +
                     '<s:Header />' +
@@ -68,6 +71,15 @@ Install with [npm](http://github.com/isaacs/npm):
                       '</s:Body>' +
                   '</s:Envelope>'  
 
-    proxy.addAttachment("//*[local-name(.)='File1']", "./test/unit/client/files/p.jpg");
-    proxy.addAttachment("//*[local-name(.)='File2']", "./test/unit/client/files/text.txt");
-    proxy.send(message, "http://tempuri.org/IService/EchoFiles", function(message, ctx) {});
+    proxy.addAttachment("//*[local-name(.)='File1']", "me.jpg");
+    proxy.addAttachment("//*[local-name(.)='File2']", "stuff.txt");
+
+    proxy.ClientCredentials.Username.Username = "yaron";
+    proxy.ClientCredentials.Username.Password = "1234";
+
+    proxy.send(message, "http://tempuri.org/IService/EchoFiles", function(response, ctx) {
+      console.log(response);
+      //read an mtom attachment from the soap response
+      var file = proxy.getAttachment("//*[local-name(.)='File1']")
+      fs.writeFileSync("result.jpg", file)      
+    });

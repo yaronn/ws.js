@@ -1,7 +1,7 @@
 ## WS.JS
 A WS-* client implementation for node.js. Written in pure javascript!
 
-Currently supports:
+**Currently supports:**
 
 * MTOM
 * WS-Security (username tokens only)
