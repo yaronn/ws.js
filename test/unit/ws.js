@@ -4,15 +4,18 @@ var ws = require('../../lib/ws.js')
 
 module.exports = {
 
-  "ws adds soap header when does not exist using namespace prefix": function (test) {
+  "ws adds soap header as first child when does not exist using namespace prefix": function (test) {
     test.expect(2)
     var mock = function() {
       
       this.send = function(ctx, callback) {				
         var doc = new Dom().parseFromString(ctx.request)
-          , header = select(doc, "/*[local-name(.)='Envelope']/*[local-name(.)='Header']")
-        test.equal(1, header.length, "soap header not found")
-        test.equal("s", header[0].prefix, "soap header has bad prefix")
+          , childs = select(doc, "/*[local-name(.)='Envelope']/*")
+        
+        if (childs.length!=2)  
+          test.fail("soap:envelope should have exactly 2 childs but it has only " + childs.length);
+        test.equal("Header", childs[0].localName, "soap header not found")        
+        test.equal("s", childs[0].prefix, "soap header has bad prefix")
         test.done()
       }	
     }
@@ -21,14 +24,16 @@ module.exports = {
     ws.send([new mock()], ctx, function() {})
 	},
 
-  "ws adds soap header when does not exist using default namespace": function (test) {
+  "ws adds soap header as first child when does not exist using default namespace": function (test) {
     test.expect(2)
     var mock = function() {
       this.send = function(ctx, callback) {
         var doc = new Dom().parseFromString(ctx.request)
-          , header = select(doc, "/*[local-name(.)='Envelope']/*[local-name(.)='Header']")
-        test.equal(1, header.length, "soap header not found")
-        test.equal(null, header.prefix, "soap header has bad prefix")
+          , childs = select(doc, "/*[local-name(.)='Envelope']/*")
+        if (childs.length!=2)  
+          test.fail("soap:envelope should have exactly 2 childs but it has only " + childs.length);
+        test.equal("Header", childs[0].localName, "soap header not found")
+        test.equal(null, childs[0].prefix, "soap header has bad prefix")
         test.done()
       }	
     }

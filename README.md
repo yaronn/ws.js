@@ -1,5 +1,5 @@
 ## WS.JS
-A WS-* client implementation for node.js. Written in pure javascript!
+A WS-* client stack for node.js. Written in pure javascript!
 
 **Currently supports:**
 

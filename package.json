@@ -1,6 +1,6 @@
 {
-    "name": "ws-js",
-    "version": "0.0.4",
+    "name": "ws.js",
+    "version": "0.0.5",
     "description": "WS-* implementation for node",
     "engines": { "node": ">=0.4.0" },
     "author": "Yaron Naveh (yaronn01@gmail.com, http://webservices20.blogspot.com/)",
@@ -8,9 +8,11 @@
         "bufferjs": ">= 1.0.2",
         "formidable": ">=1.0.9",
         "request": ">=2.9.100",
-        "xmldom": ">=0.1.1",
-        "nodeunit": ">=0.6.4",
+        "xmldom": ">=0.1.1",    
         "dateformat": ">=1.0.2-1.2.3"        
+     },
+     "devDependencies": {
+        "nodeunit": ">=0.6.4"
      },
     "repository" : { 
         "type":"git", 
