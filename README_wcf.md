@@ -3,8 +3,6 @@ A WCF-compatible web service client implementation for node.js. Written in pure 
 
 **Imagine this:**
     
-(see down in the page for a complete sample)
-
     var binding = new WSHttpBinding(
           { MessageEncoding: "Mtom"
           , SecurityMode:"TransportWithMessageCredential"
@@ -17,6 +15,8 @@ A WCF-compatible web service client implementation for node.js. Written in pure 
     proxy.send(message, function(response) {
       console.log(response)
     });
+
+(See below for a complete sample)
 
 **Currently supports a subset of:**
 
@@ -44,7 +44,7 @@ Install with [npm](http://github.com/isaacs/npm):
     var BasicHttpBinding = require('wcf.js').BasicHttpBinding
       , Proxy = require('wcf.js').Proxy
       , binding = new BasicHttpBinding(
-            { SecurityMode:"TransportWithMessageCredential"
+            { SecurityMode: "TransportWithMessageCredential"
             , MessageClientCredentialType: "UserName"
             })
       , proxy = new Proxy(binding, "http://localhost:7171/Service/clearUsername")
@@ -68,10 +68,11 @@ Install with [npm](http://github.com/isaacs/npm):
     var CustomBinding = require('wcf.js').CustomBinding
       , MtomMessageEncodingBindingElement = require('wcf.js').MtomMessageEncodingBindingElement
       , HttpTransportBindingElement = require('wcf.js').HttpTransportBindingElement
+      , SecurityBindingElement = require('./lib/proxies/wcf.js').SecurityBindingElement
       , Proxy = require('wcf.js').Proxy
       , fs = require('fs')
       , binding = new CustomBinding(
-            [ new SecurityBindingElement({AuthenticationMode="UserNameOverTransport"})
+            [ new SecurityBindingElement({AuthenticationMode: "UserNameOverTransport"})
             , new MtomMessageEncodingBindingElement({MessageVersion: "Soap12WSAddressing10"}),
             , new HttpTransportBindingElement()
             ])
