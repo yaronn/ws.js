@@ -15,7 +15,7 @@ Install with [npm](http://github.com/isaacs/npm):
 
     npm install ws.js
 
-## Use
+## Usage
 
 ### WS-Security (Username)
     var ws = require('ws.js')

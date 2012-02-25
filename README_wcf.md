@@ -2,18 +2,18 @@
 A WCF-compatible web service client implementation for node.js. Written in pure javascript!
 
 **Imagine this:**
-      
+    
+(see down in the page for a complete sample)
     var binding = new WSHttpBinding(
-          { SecurityMode:"TransportWithMessageCredential"
-          , MessageClientCredentialType: "UserName"
-          , MessageEncoding: "Mtom"
+          { MessageEncoding: "Mtom"
+          , SecurityMode:"TransportWithMessageCredential"
           })
-    , proxy = new Proxy(binding, "http://server/service.svc")      
+      , proxy = new Proxy(binding)      
 
     proxy.ClientCredentials.Username.Username = "yaron";
     proxy.ClientCredentials.Username.Password = "1234";
 
-    proxy.send(message, action, function(response, ctx) {
+    proxy.send(message, function(response) {
       console.log(response)
     });
 
@@ -37,7 +37,7 @@ Install with [npm](http://github.com/isaacs/npm):
 
     npm install wcf.js
 
-## Use
+## Usage
 
 ### BasicHttpBinding (TransportWithMessageCredential)
     var BasicHttpBinding = require('wcf.js').BasicHttpBinding
