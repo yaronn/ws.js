@@ -1,3 +1,5 @@
+## WS.JS
+
 A WS-* client implementation for node.js. Written in pure javascript!
 
 Currently supports:
@@ -7,7 +9,7 @@ Currently supports:
 * WS-Addressing (all versions)
 * HTTP(S)
 
-For more information visit [my blog](http://webservices20.blogspot.com/) or drop me an [an mail](mailto:yaronn01@gmail.com).
+For more information visit [my blog](http://webservices20.blogspot.com/).
 
 ## Install
 
@@ -19,21 +21,27 @@ Install with [npm](http://github.com/isaacs/npm):
 
 ### WS-Security (username)
     var ws = require('ws.js')
-      , ctx =  { request:   '<Envelope xmlns="'"http://schemas.xmlsoap.org/soap/envelope/">'' +
-                              '<Header /> +
-                                '<Body> +
-                                  '<EchoString xmlns="http://tempuri.org/">'' +
-                                    '<s>123</s>'' +
-                                  '</EchoString>'' +
-                                '</Body>' +
-                            '</Envelope>'
+      , Http = ws.Http
+      , Security = ws.Security
+      , UsernameToken = ws.UsernameToken
+
+    var request =  '<Envelope xmlns="'"http://schemas.xmlsoap.org/soap/envelope/">'' +
+                      '<Header /> +
+                        '<Body> +
+                          '<EchoString xmlns="http://tempuri.org/">'' +
+                            '<s>123</s>'' +
+                          '</EchoString>'' +
+                        '</Body>' +
+                    '</Envelope>'
+
+    var ctx =  { request: request 
                , url: "http://localhost/service"
                , action: "http://tempuri.org/EchoString"
                , contentType: "text/xml" 
                }
 
-    var handlers =  [ new ws.Security({}, [new sec.UsernameToken({username: "yaron", password: "1234"})]),
-                    , new ws.Http()
+    var handlers =  [ new Security({}, [new UsernameToken({username: "yaron", password: "1234"})]),
+                    , new Http()
                     ]
 
     ws.send(handlers, ctx, function(ctx) {                    
@@ -51,6 +59,10 @@ Install with [npm](http://github.com/isaacs/npm):
     </s:Envelope>
 
 ### MTOM
+    
+    var ws = require('ws.js')
+      , Http = ws.Http
+      , Mtom = ws.Mtom
 
     var request = '<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope">' +
                     '<s:Body>' +
@@ -65,12 +77,14 @@ Install with [npm](http://github.com/isaacs/npm):
               , url: "http://localhost:7171/Service/mtom"
               , action: "http://tempuri.org/IService/EchoFiles"
               }
+
     ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']", 
                     "me.jpg", "image/jpeg")
     
-    var handlers =  [ new ws.Mtom()
-                    , new ws.Http()
+    var handlers =  [ new Mtom()
+                    , new Http()
                     ];
+    
     ws.send(handlers, ctx, function(ctx) {      
       var file = ws.getAttachment(ctx, "response", "//*[local-name(.)='File1']")
       fs.writeFileSync("result.jpg", file)      
@@ -88,6 +102,8 @@ Install with [npm](http://github.com/isaacs/npm):
 
 ### WS-Addressing
     var ws = require('ws.js')
+      , Http = ws.Http
+      , Addr = ws.Addr
       , ctx =  { request:   "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
                               "<Header />" +
                                 "<Body>" +
@@ -101,8 +117,8 @@ Install with [npm](http://github.com/isaacs/npm):
                , contentType: "text/xml" 
                }
 
-    var handlers =  [ new ws.Addr("http://ws-addressing/v8")
-                    , new ws.Http()
+    var handlers =  [ new Addr("http://ws-addressing/v8")
+                    , new Http()
                     ]
 
     ws.send(handlers, ctx, function(ctx) {                    
@@ -120,11 +136,16 @@ Install with [npm](http://github.com/isaacs/npm):
     </s:Envelope>
 
 ### SSL
-Just specify an https address in any of the previous samples.
+Just specify an http**s** address in any of the previous samples.
 
 ### All together now
   
     var ws = require('ws.js')
+      , Http = ws.Http
+      , Addr = ws.Addr
+      , Mtom = ws.Mtom
+      , Security = ws.Security
+      , UsernameToken = ws.UsernameToken
       , ctx =  { request:   "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
                               "<Header />" +
                                 "<Body>" +
@@ -141,10 +162,10 @@ Just specify an https address in any of the previous samples.
     ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']", 
                       "me.jpg", "image/jpeg")
 
-    var handlers =  [ new ws.Security({}, [new sec.UsernameToken({username: "yaron", password: "1234"})]),
-                    , new ws.Addr("http://ws-addressing/v8")
-                    , new ws.Mtom() //Mtom must be after everything except http
-                    , new ws.Http()
+    var handlers =  [ new Security({}, [new UsernameToken({username: "yaron", password: "1234"})]),
+                    , new Addr("http://ws-addressing/v8")
+                    , new Mtom() //Mtom must be after everything except http
+                    , new Http()
                     ]
 
     ws.send(handlers, ctx, function(ctx) {                    
@@ -153,4 +174,4 @@ Just specify an https address in any of the previous samples.
 
 ### More details
 * [http://webservices20.blogspot.com/](http://webservices20.blogspot.com/)
-* [yaronn01@gmail.com](mailto:yaronn01@gmail.com)
+* Or drop me an [email](mailto:yaronn01@gmail.com)
