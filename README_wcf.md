@@ -1,6 +1,22 @@
 ## WCF.JS
 A WCF-compatible web service client implementation for node.js. Written in pure javascript!
 
+**Imagine this:**
+      
+    var binding = new WSHttpBinding(
+          { SecurityMode:"TransportWithMessageCredential"
+          , MessageClientCredentialType: "UserName"
+          , MessageEncoding: "Mtom"
+          })
+    , proxy = new Proxy(binding, "http://server/service.svc")      
+
+    proxy.ClientCredentials.Username.Username = "yaron";
+    proxy.ClientCredentials.Username.Password = "1234";
+
+    proxy.send(message, action, function(response, ctx) {
+      console.log(response)
+    });
+
 **Currently supports a subset of:**
 
 * BasicHttpBinding
@@ -24,12 +40,12 @@ Install with [npm](http://github.com/isaacs/npm):
 ## Use
 
 ### BasicHttpBinding (TransportWithMessageCredential)
-    var BasicHttpBinding = require('../lib/proxies/wcf.js').BasicHttpBinding
-      , Proxy = require('../lib/proxies/wcf.js').Proxy
-      , **binding = new BasicHttpBinding(
+    var BasicHttpBinding = require('wcf.js').BasicHttpBinding
+      , Proxy = require('wcf.js').Proxy
+      , binding = new BasicHttpBinding(
             { SecurityMode:"TransportWithMessageCredential"
             , MessageClientCredentialType: "UserName"
-            })**
+            })
       , proxy = new Proxy(binding, "http://localhost:7171/Service/clearUsername")
       , message =  "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
                      "<Header />" +
@@ -42,22 +58,22 @@ Install with [npm](http://github.com/isaacs/npm):
 
     proxy.ClientCredentials.Username.Username = "yaron";
     proxy.ClientCredentials.Username.Password = "1234";
-    
-    proxy.send(message, "http://tempuri.org/IService/GetData", function(message, ctx) {
-      console.log(message)
+
+    proxy.send(message, "http://tempuri.org/IService/GetData", function(response, ctx) {
+      console.log(response)
     });
 
 ### CustomBinding (Mtom + UserNameOverTransport + WSAddressing10)
-    var CustomBinding = require('../lib/proxies/wcf.js').CustomBinding
-      , MtomMessageEncodingBindingElement = require('../lib/proxies/wcf.js').MtomMessageEncodingBindingElement
-      , HttpTransportBindingElement = require('../lib/proxies/wcf.js').HttpTransportBindingElement
-      , Proxy = require('../lib/proxies/wcf.js').Proxy
+    var CustomBinding = require('wcf.js').CustomBinding
+      , MtomMessageEncodingBindingElement = require('wcf.js').MtomMessageEncodingBindingElement
+      , HttpTransportBindingElement = require('wcf.js').HttpTransportBindingElement
+      , Proxy = require('wcf.js').Proxy
       , fs = require('fs')
-      , **binding = new CustomBinding(
+      , binding = new CustomBinding(
             [ new SecurityBindingElement({AuthenticationMode="UserNameOverTransport"})
             , new MtomMessageEncodingBindingElement({MessageVersion: "Soap12WSAddressing10"}),
             , new HttpTransportBindingElement()
-            ])**
+            ])
       , proxy = new Proxy(binding, "http://localhost:7171/Service/mtom")
       , message = '<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope">' +
                     '<s:Header />' +
