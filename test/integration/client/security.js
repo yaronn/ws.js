@@ -4,6 +4,8 @@ var ws = require('../../../lib/ws.js')
   , fs = require('fs')
   , xml_assert = require('../../utils/xml-assert.js')
   , sec = require('../../../lib/handlers/client/security/security.js')
+  , X509BinarySecurityToken = ws.X509BinarySecurityToken
+  , FileKeyInfo = require('xml-crypto').FileKeyInfo  
 
 module.exports = {
 	
@@ -22,5 +24,6 @@ module.exports = {
       new ws.Http()					
     ];
     utils.soapTest.call(this, test, "clearUsername", "soap11", handlers )
-  }
+  },
+
 }

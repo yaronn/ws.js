@@ -1,18 +1,22 @@
-var ws = require('./lib/ws.js')
-  , ctx =  { request: 	"<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
-                          "<Header />" +
-                            "<Body>" +
-                              "<EchoString xmlns='http://tempuri.org/'>" +
-                                "<s>123</s>" +
-                              "</EchoString>" +
-                            "</Body>" +
-                        "</Envelope>"
-           , url: "http://localhost/service"
-           , action: "http://tempuri.org/EchoString"
+var ws = require('../lib/ws.js')
+
+request = "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
+          "<Header />" +
+            "<Body>" +
+              "<GetData xmlns='http://tempuri.org/'>" +
+                "<value>123</value>" +
+              "</GetData>" +
+            "</Body>" +
+          "</Envelope>"
+
+var ctx =  { request: request
+           , url: "http://localhost:7171/Service/soap11wsa0408"
+           , action: "http://tempuri.org/IService/GetData"
            , contentType: "text/xml" 
            }
 
-var handlers =  [ new ws.Addr("http://ws-addressing/v8")
+
+var handlers =  [ new ws.Addr("http://schemas.xmlsoap.org/ws/2004/08/addressing")
                 , new ws.Http()
                 ]
 

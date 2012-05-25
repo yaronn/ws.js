@@ -42,7 +42,7 @@ module.exports = {
     s.send(ctx)
 	},
 
-  "usename token generated correctly": function (test) {		
+  "username token generated correctly": function (test) {		
     test.expect(4)
     var Mock = function(test, version) {
       this.send = function(ctx) {                                             
@@ -106,4 +106,5 @@ module.exports = {
     var ctx = {request: utils.EMPTY_SOAP}
     s.receive(ctx, function(ctx) {test.done()}, this)
   },
+  
 }

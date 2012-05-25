@@ -36,12 +36,14 @@ exports.soapTest = function(test, endpoint, version, handlers, validator) {
 	}
 
   ws.send(handlers,	ctx, function(ctx) {  				    			
+
     test.equal(200, ctx.statusCode, "status code shows an error")
     test.equal(null, ctx.error, "there was an error")				
     if (ctx.response.indexOf("You entered: 123")==-1) {
       test.fail("response does not contain 'You entered: 123'. Response is: " + ctx.response)
     }
     if (validator) validator(test, ctx)
+    
     test.done()
   })	
 }
