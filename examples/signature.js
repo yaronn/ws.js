@@ -1,12 +1,12 @@
-var ws = require('../lib/ws.js')
+var ws = require('ws.js')
 , fs = require('fs')
-, sec = require('../lib/handlers/client/security/security.js')
+, sec = ws.Security
 , X509BinarySecurityToken = ws.X509BinarySecurityToken
 , FileKeyInfo = require('xml-crypto').FileKeyInfo  
 
 
 var x509 = new X509BinarySecurityToken(
-  { "key": fs.readFileSync("./examples/client.pem").toString()})
+  { "key": fs.readFileSync("client.pem").toString()})
 var signature = new ws.Signature(x509)
 signature.addReference("//*[local-name(.)='Body']")    
 signature.addReference("//*[local-name(.)='Timestamp']")    
@@ -18,7 +18,7 @@ var sec = new ws.Security({"validateResponseSignature": true},
   ])
 
 //only required if you specified validateResponseSignature as true
-sec.options.responseKeyInfoProvider = new FileKeyInfo("./examples/server_public.pem")
+sec.options.responseKeyInfoProvider = new FileKeyInfo("server_public.pem")
 
 var handlers =  
   [ new ws.Addr("http://www.w3.org/2005/08/addressing")

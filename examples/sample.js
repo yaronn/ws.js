@@ -1,4 +1,4 @@
-var ws = require('../lib/ws.js')
+var ws = require('ws.js')
 
 request = "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
           "<Header />" +
