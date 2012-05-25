@@ -87,11 +87,10 @@ signature.addReference("//*[local-name(.)='Timestamp']")
 
 var sec = new ws.Security({}, [ x509, signature ])
 
-var handlers =  
-  [ new ws.Addr("http://www.w3.org/2005/08/addressing")
-  , sec
-  , new ws.Http()
-  ]
+var handlers =  [ new ws.Addr("http://www.w3.org/2005/08/addressing")
+                , sec
+                , new ws.Http()
+                ]
 
 request = "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
           "<Header />" +
@@ -166,7 +165,7 @@ ws.send(handlers, ctx, function(ctx) {
 </Envelope>
 `````
 
-** Notes: **
+**Notes:**
 
 By default incoming signatures are not validates. To validate these signatures when you create the security channel specify the validateResponseSignature parameter:
 
@@ -322,7 +321,8 @@ Just specify an http**s** address in any of the previous samples.
     ws.send(handlers, ctx, function(ctx) {                    
       console.log("response: " + ctx.response);
     })
-`````xml
+`````
+
 ### More details
 * [http://webservices20.blogspot.com/](http://webservices20.blogspot.com/)
 * Or drop me an [email](mailto:yaronn01@gmail.com)
