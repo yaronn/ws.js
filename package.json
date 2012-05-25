@@ -1,6 +1,6 @@
 {
     "name": "ws.js",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "description": "WS-* implementation for node",
     "engines": { "node": ">=0.4.0" },
     "author": "Yaron Naveh (yaronn01@gmail.com, http://webservices20.blogspot.com/)",
@@ -10,7 +10,7 @@
         "request": ">=2.9.100",
         "xmldom": "git://github.com/yaronn/xmldom.git",    
         "dateformat": ">=1.0.2-1.2.3",
-        "xml-crypto": ">=0.0.2"    
+        "xml-crypto": ">=0.0.3"    
      },
      "devDependencies": {
         "nodeunit": ">=0.6.4"
