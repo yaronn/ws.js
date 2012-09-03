@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Ws.js by yaronn</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Ws.js</h1>
+        <h2>A WS-* client stack for node.js. Written in pure javascript!</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/yaronn/ws.js/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/yaronn/ws.js/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/yaronn/ws.js" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h2>WS.JS</h2>
+
+<p>A WS-* client stack for node.js. Written in pure javascript!</p>
+
+<p><strong>Currently supports:</strong></p>
+
+<ul>
+<li>MTOM</li>
+<li>WS-Security (username tokens, x.509 digital signature)</li>
+<li>WS-Addressing (all versions)</li>
+<li>HTTP(S)</li>
+</ul><p>For more information visit <a href="http://webservices20.blogspot.com/">my blog</a>.</p>
+
+<h2>Install</h2>
+
+<p>Install with <a href="http://github.com/isaacs/npm">npm</a>:</p>
+
+<pre><code>npm install ws.js
+</code></pre>
+
+<h2>Usage</h2>
+
+<h3>WS-Security (Username)</h3>
+
+<div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">ws</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'ws.js'</span><span class="p">)</span>
+      <span class="p">,</span> <span class="nx">Http</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Http</span>
+      <span class="p">,</span> <span class="nx">Security</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Security</span>
+      <span class="p">,</span> <span class="nx">UsernameToken</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">UsernameToken</span>
+
+    <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span>  <span class="s1">'&lt;Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/"&gt;'</span> <span class="o">+</span>
+                      <span class="s1">'&lt;Header /&gt;'</span> <span class="o">+</span>
+                        <span class="s1">'&lt;Body&gt;'</span> <span class="o">+</span>
+                          <span class="s1">'&lt;EchoString xmlns="http://tempuri.org/"&gt;'</span> <span class="o">+</span>
+                            <span class="s1">'&lt;s&gt;123&lt;/s&gt;'</span> <span class="o">+</span>
+                          <span class="s1">'&lt;/EchoString&gt;'</span> <span class="o">+</span>
+                        <span class="s1">'&lt;/Body&gt;'</span> <span class="o">+</span>
+                    <span class="s1">'&lt;/Envelope&gt;'</span>
+
+    <span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span>  <span class="p">{</span> <span class="nx">request</span><span class="o">:</span> <span class="nx">request</span> 
+               <span class="p">,</span> <span class="nx">url</span><span class="o">:</span> <span class="s2">"http://service/security"</span>
+               <span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s2">"http://tempuri.org/EchoString"</span>
+               <span class="p">,</span> <span class="nx">contentType</span><span class="o">:</span> <span class="s2">"text/xml"</span> 
+               <span class="p">}</span>
+
+
+    <span class="kd">var</span> <span class="nx">handlers</span> <span class="o">=</span>  <span class="p">[</span> <span class="k">new</span> <span class="nx">Security</span><span class="p">({},</span> <span class="p">[</span><span class="k">new</span> <span class="nx">UsernameToken</span><span class="p">({</span><span class="nx">username</span><span class="o">:</span> <span class="s2">"yaron"</span><span class="p">,</span> <span class="nx">password</span><span class="o">:</span> <span class="s2">"1234"</span><span class="p">})])</span>
+                    <span class="p">,</span> <span class="k">new</span> <span class="nx">Http</span><span class="p">()</span>
+                    <span class="p">]</span>
+
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">handlers</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>                    
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"response: "</span> <span class="o">+</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">})</span>
+</pre></div>
+
+<p>==&gt;</p>
+
+<div class="highlight"><pre>    <span class="nt">&lt;Envelope</span> <span class="na">xmlns=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="na">xmlns:u=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"</span> <span class="na">xmlns:o=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Header&gt;</span>
+      <span class="nt">&lt;o:Security&gt;</span>
+        <span class="nt">&lt;u:Timestamp&gt;</span>
+          <span class="nt">&lt;u:Created&gt;</span>2012-02-26T11:03:40Z<span class="nt">&lt;/u:Created&gt;</span>
+          <span class="nt">&lt;u:Expires&gt;</span>2012-02-26T11:08:40Z<span class="nt">&lt;/u:Expires&gt;</span>
+        <span class="nt">&lt;/u:Timestamp&gt;</span>
+        <span class="nt">&lt;o:UsernameToken&gt;</span>
+          <span class="nt">&lt;o:Username&gt;</span>yaron<span class="nt">&lt;/o:Username&gt;</span>
+          <span class="nt">&lt;o:Password</span> <span class="na">Type=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"</span><span class="nt">&gt;</span>1234<span class="nt">&lt;/o:Password&gt;</span>
+        <span class="nt">&lt;/o:UsernameToken&gt;</span>
+      <span class="nt">&lt;/o:Security&gt;</span>
+    <span class="nt">&lt;/Header&gt;</span>
+    <span class="nt">&lt;Body&gt;</span>
+      <span class="nt">&lt;EchoString</span> <span class="na">xmlns=</span><span class="s">"http://tempuri.org/"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;s&gt;</span>123<span class="nt">&lt;/s&gt;</span>
+      <span class="nt">&lt;/EchoString&gt;</span>
+    <span class="nt">&lt;/Body&gt;</span>
+  <span class="nt">&lt;/Envelope&gt;</span>
+</pre></div>
+
+<h3>WS-Security (digital signature)</h3>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">ws</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'ws.js'</span><span class="p">)</span>
+<span class="p">,</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">)</span>
+<span class="p">,</span> <span class="nx">sec</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Security</span>
+<span class="p">,</span> <span class="nx">X509BinarySecurityToken</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">X509BinarySecurityToken</span>
+<span class="p">,</span> <span class="nx">FileKeyInfo</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'xml-crypto'</span><span class="p">).</span><span class="nx">FileKeyInfo</span>  
+
+<span class="kd">var</span> <span class="nx">x509</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">X509BinarySecurityToken</span><span class="p">(</span>
+  <span class="p">{</span> <span class="s2">"key"</span><span class="o">:</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s2">"client.pem"</span><span class="p">).</span><span class="nx">toString</span><span class="p">()})</span>
+<span class="kd">var</span> <span class="nx">signature</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Signature</span><span class="p">(</span><span class="nx">x509</span><span class="p">)</span>
+<span class="nx">signature</span><span class="p">.</span><span class="nx">addReference</span><span class="p">(</span><span class="s2">"//*[local-name(.)='Body']"</span><span class="p">)</span>    
+<span class="nx">signature</span><span class="p">.</span><span class="nx">addReference</span><span class="p">(</span><span class="s2">"//*[local-name(.)='Timestamp']"</span><span class="p">)</span>    
+
+<span class="kd">var</span> <span class="nx">sec</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Security</span><span class="p">({},</span> <span class="p">[</span> <span class="nx">x509</span><span class="p">,</span> <span class="nx">signature</span> <span class="p">])</span>
+
+<span class="kd">var</span> <span class="nx">handlers</span> <span class="o">=</span>  <span class="p">[</span> <span class="k">new</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Addr</span><span class="p">(</span><span class="s2">"http://www.w3.org/2005/08/addressing"</span><span class="p">)</span>
+                <span class="p">,</span> <span class="nx">sec</span>
+                <span class="p">,</span> <span class="k">new</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Http</span><span class="p">()</span>
+                <span class="p">]</span>
+
+<span class="nx">request</span> <span class="o">=</span> <span class="s2">"&lt;Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'&gt;"</span> <span class="o">+</span>
+          <span class="s2">"&lt;Header /&gt;"</span> <span class="o">+</span>
+            <span class="s2">"&lt;Body&gt;"</span> <span class="o">+</span>
+              <span class="s2">"&lt;GetData xmlns='http://tempuri.org/'&gt;"</span> <span class="o">+</span>
+                <span class="s2">"&lt;value&gt;123&lt;/value&gt;"</span> <span class="o">+</span>
+              <span class="s2">"&lt;/GetData&gt;"</span> <span class="o">+</span>
+            <span class="s2">"&lt;/Body&gt;"</span> <span class="o">+</span>
+          <span class="s2">"&lt;/Envelope&gt;"</span>
+
+<span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span>   <span class="p">{</span> <span class="nx">request</span><span class="o">:</span> <span class="nx">request</span>
+  <span class="p">,</span> <span class="nx">url</span><span class="o">:</span> <span class="s2">"http://localhost:7171/Service/signature"</span>
+  <span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s2">"http://tempuri.org/IService/GetData"</span>
+  <span class="p">,</span> <span class="nx">contentType</span><span class="o">:</span> <span class="s2">"text/xml"</span>
+<span class="p">}</span>
+
+<span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">handlers</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>                    
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"status "</span> <span class="o">+</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"messagse "</span> <span class="o">+</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">response</span><span class="p">)</span>
+<span class="p">})</span>  
+</pre></div>
+
+<p>==&gt;</p>
+
+<div class="highlight"><pre><span class="nt">&lt;Envelope</span> <span class="na">xmlns=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="na">xmlns:ws=</span><span class="s">"http://www.w3.org/2005/08/addressing"</span> <span class="na">xmlns:u=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"</span> <span class="na">xmlns:o=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Header&gt;</span>
+    <span class="nt">&lt;ws:Action&gt;</span>http://tempuri.org/IService/GetData<span class="nt">&lt;/ws:Action&gt;</span>
+    <span class="nt">&lt;ws:To&gt;</span>http://localhost:8888/<span class="nt">&lt;/ws:To&gt;</span>
+    <span class="nt">&lt;ws:MessageID&gt;</span>ca62b7d7-4f74-75ed-9f5c-b09b173f6747<span class="nt">&lt;/ws:MessageID&gt;</span>
+    <span class="nt">&lt;ws:ReplyTo&gt;</span>
+      <span class="nt">&lt;ws:Address&gt;</span>http://www.w3.org/2005/08/addressing/role/anonymous<span class="nt">&lt;/ws:Address&gt;</span>
+    <span class="nt">&lt;/ws:ReplyTo&gt;</span>
+    <span class="nt">&lt;o:Security&gt;</span>
+      <span class="nt">&lt;u:Timestamp</span> <span class="na">xmlns:wsu=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"</span> <span class="na">wsu:Id=</span><span class="s">"_1"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;u:Created&gt;</span>2012-05-25T12:18:38Z<span class="nt">&lt;/u:Created&gt;</span>
+        <span class="nt">&lt;u:Expires&gt;</span>2012-05-25T12:23:38Z<span class="nt">&lt;/u:Expires&gt;</span>
+      <span class="nt">&lt;/u:Timestamp&gt;</span>
+      <span class="nt">&lt;o:BinarySecurityToken</span> <span class="na">ValueType=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3"</span> <span class="na">EncodingType=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"</span> <span class="na">u:Id=</span><span class="s">"sec_0"</span><span class="nt">&gt;</span>MIIBxDCCAW6gAwIBAgIQxUSXFzWJYYtOZnmmuOMKkjANBgkqhkiG9w0BAQQFADAWMRQwEgYDVQQDEwtSb290IEFnZW5jeTAeFw0wMzA3MDgxODQ3NTlaFw0zOTEyMzEyMzU5NTlaMB8xHTAbBgNVBAMTFFdTRTJRdWlja1N0YXJ0Q2xpZW50MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+L6aB9x928noY4+0QBsXnxkQE4quJl7c3PUPdVu7k9A02hRG481XIfWhrDY5i7OEB7KGW7qFJotLLeMec/UkKUwCgv3VvJrs2nE9xO3SSWIdNzADukYh+Cxt+FUU6tUkDeqg7dqwivOXhuOTRyOI3HqbWTbumaLdc8jufz2LhaQIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwDQYJKoZIhvcNAQEEBQADQQAfIbnMPVYkNNfX1tG1F+qfLhHwJdfDUZuPyRPucWF5qkh6sSdWVBY5sT/txBnVJGziyO8DPYdu2fPMER8ajJfl<span class="nt">&lt;/o:BinarySecurityToken&gt;</span>
+      <span class="nt">&lt;Signature</span> <span class="na">xmlns=</span><span class="s">"http://www.w3.org/2000/09/xmldsig#"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;SignedInfo&gt;</span>
+          <span class="nt">&lt;CanonicalizationMethod</span> <span class="na">Algorithm=</span><span class="s">"http://www.w3.org/2001/10/xml-exc-c14n#"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;SignatureMethod</span> <span class="na">Algorithm=</span><span class="s">"http://www.w3.org/2000/09/xmldsig#rsa-sha1"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;Reference</span> <span class="na">URI=</span><span class="s">"#_0"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Transforms&gt;</span>
+              <span class="nt">&lt;Transform</span> <span class="na">Algorithm=</span><span class="s">"http://www.w3.org/2001/10/xml-exc-c14n#"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Transforms&gt;</span>
+            <span class="nt">&lt;DigestMethod</span> <span class="na">Algorithm=</span><span class="s">"http://www.w3.org/2000/09/xmldsig#sha1"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;DigestValue&gt;</span>fxQc0PEh2GHA43IXltm6gjbccsA=<span class="nt">&lt;/DigestValue&gt;</span>
+          <span class="nt">&lt;/Reference&gt;</span>
+          <span class="nt">&lt;Reference</span> <span class="na">URI=</span><span class="s">"#_1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Transforms&gt;</span>
+              <span class="nt">&lt;Transform</span> <span class="na">Algorithm=</span><span class="s">"http://www.w3.org/2001/10/xml-exc-c14n#"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Transforms&gt;</span>
+            <span class="nt">&lt;DigestMethod</span> <span class="na">Algorithm=</span><span class="s">"http://www.w3.org/2000/09/xmldsig#sha1"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;DigestValue&gt;</span>L+vrfEszbn2ZtXiWfNyDG8nM1e8=<span class="nt">&lt;/DigestValue&gt;</span>
+          <span class="nt">&lt;/Reference&gt;</span>
+        <span class="nt">&lt;/SignedInfo&gt;</span>
+        <span class="nt">&lt;SignatureValue&gt;</span>AcOb1KJHpyQnnChEZFKaIjVag8iREL7g+LEXnvHQ/wH9ffIj0s1sdF2xO2AvQkqLUeefIEPgyiKUPR9sk8RMchJxv7UDx8wGuvD2WFPbd3yy50qcsu2UkiUm0lW/R3lpv88w83Z95LFZ1yq1MnOe2Sh0y5esoCbJo1fJETS8mQ0=<span class="nt">&lt;/SignatureValue&gt;</span>
+        <span class="nt">&lt;KeyInfo&gt;</span>
+          <span class="nt">&lt;o:SecurityTokenReference&gt;</span>
+            <span class="nt">&lt;o:Reference</span> <span class="na">URI=</span><span class="s">"#sec_0"</span> <span class="na">ValueType=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;/o:SecurityTokenReference&gt;</span>
+        <span class="nt">&lt;/KeyInfo&gt;</span>
+      <span class="nt">&lt;/Signature&gt;</span>
+    <span class="nt">&lt;/o:Security&gt;</span>
+  <span class="nt">&lt;/Header&gt;</span>
+  <span class="nt">&lt;Body</span> <span class="na">xmlns:wsu=</span><span class="s">"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"</span> <span class="na">wsu:Id=</span><span class="s">"_0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;GetData</span> <span class="na">xmlns=</span><span class="s">"http://tempuri.org/"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>123<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/GetData&gt;</span>
+  <span class="nt">&lt;/Body&gt;</span>
+<span class="nt">&lt;/Envelope&gt;</span>
+</pre></div>
+
+<p><strong>Notes:</strong></p>
+
+<p>By default incoming signatures are not validates. To validate these signatures when you create the security channel specify the validateResponseSignature parameter:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">sec</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Security</span><span class="p">({</span><span class="s2">"validateResponseSignature"</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span> <span class="p">...</span>
+</pre></div>
+
+<p>Next specify the server certificate (the public key corresponding to the server private sgining key):</p>
+
+<div class="highlight"><pre><span class="nx">sec</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">responseKeyInfoProvider</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileKeyInfo</span><span class="p">(</span><span class="s2">"./examples/server_public.pem"</span><span class="p">)</span>
+</pre></div>
+
+<p>In the future the server certificate will be extracted from the BinarySecurityToken automatically (when available).</p>
+
+<h3>MTOM</h3>
+
+<div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">ws</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'ws.js'</span><span class="p">)</span>
+      <span class="p">,</span> <span class="nx">Http</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Http</span>
+      <span class="p">,</span> <span class="nx">Mtom</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Mtom</span>
+
+    <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="s1">'&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;'</span> <span class="o">+</span>
+                    <span class="s1">'&lt;s:Body&gt;'</span> <span class="o">+</span>
+                      <span class="s1">'&lt;EchoFiles xmlns="http://tempuri.org/"&gt;'</span> <span class="o">+</span>                        
+                          <span class="s1">'&lt;File1 /&gt;'</span> <span class="o">+</span>
+                      <span class="s1">'&lt;/EchoFiles&gt;'</span> <span class="o">+</span>
+                    <span class="s1">'&lt;/s:Body&gt;'</span> <span class="o">+</span>
+                  <span class="s1">'&lt;/s:Envelope&gt;'</span>   
+
+    <span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">request</span><span class="o">:</span> <span class="nx">request</span>
+              <span class="p">,</span> <span class="nx">contentType</span><span class="o">:</span> <span class="s2">"application/soap+xml"</span>
+              <span class="p">,</span> <span class="nx">url</span><span class="o">:</span> <span class="s2">"http://localhost:7171/Service/mtom"</span>
+              <span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s2">"http://tempuri.org/IService/EchoFiles"</span>
+              <span class="p">}</span>
+
+    <span class="c1">//add attachment to the soap request</span>
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">addAttachment</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s2">"request"</span><span class="p">,</span> <span class="s2">"//*[local-name(.)='File1']"</span><span class="p">,</span> 
+                    <span class="s2">"me.jpg"</span><span class="p">,</span> <span class="s2">"image/jpeg"</span><span class="p">)</span>
+
+    <span class="kd">var</span> <span class="nx">handlers</span> <span class="o">=</span>  <span class="p">[</span> <span class="k">new</span> <span class="nx">Mtom</span><span class="p">()</span>
+                    <span class="p">,</span> <span class="k">new</span> <span class="nx">Http</span><span class="p">()</span>
+                    <span class="p">];</span>
+
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">handlers</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>      
+      <span class="c1">//read an attachment from the soap response</span>
+      <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">getAttachment</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s2">"response"</span><span class="p">,</span> <span class="s2">"//*[local-name(.)='File1']"</span><span class="p">)</span>
+      <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s2">"result.jpg"</span><span class="p">,</span> <span class="nx">file</span><span class="p">)</span>      
+    <span class="p">})</span>
+</pre></div>
+
+<p>==&gt;</p>
+
+<div class="highlight"><pre>    --my_unique_boundary
+    Content-ID: <span class="nt">&lt;part0&gt;</span>
+    Content-Transfer-Encoding: 8bit
+    Content-Type: application/xop+xml;charset=utf-8;type="application/soap+xml"
+
+    <span class="nt">&lt;s:Envelope</span> <span class="na">xmlns:s=</span><span class="s">"http://www.w3.org/2003/05/soap-envelope"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;s:Body&gt;</span>
+        <span class="nt">&lt;EchoFiles</span> <span class="na">xmlns=</span><span class="s">"http://tempuri.org/"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;File1&gt;</span>
+            <span class="nt">&lt;xop:Include</span> <span class="na">xmlns:xop=</span><span class="s">"http://www.w3.org/2004/08/xop/include"</span> <span class="na">href=</span><span class="s">"cid:part1"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;/File1&gt;</span>
+        <span class="nt">&lt;/EchoFiles&gt;</span>
+      <span class="nt">&lt;/s:Body&gt;</span>
+      <span class="nt">&lt;s:Header</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/s:Envelope&gt;</span>
+    --my_unique_boundary
+    Content-ID: <span class="nt">&lt;part1&gt;</span>
+    Content-Transfer-Encoding: binary
+    Content-Type: image/jpeg
+
+    [binary here...]
+</pre></div>
+
+<h3>WS-Addressing</h3>
+
+<div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">ws</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'ws.js'</span><span class="p">)</span>
+      <span class="p">,</span> <span class="nx">Http</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Http</span>
+      <span class="p">,</span> <span class="nx">Addr</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Addr</span>
+      <span class="p">,</span> <span class="nx">ctx</span> <span class="o">=</span>  <span class="p">{</span> <span class="nx">request</span><span class="o">:</span>   <span class="s2">"&lt;Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'&gt;"</span> <span class="o">+</span>
+                              <span class="s2">"&lt;Header /&gt;"</span> <span class="o">+</span>
+                                <span class="s2">"&lt;Body&gt;"</span> <span class="o">+</span>
+                                  <span class="s2">"&lt;EchoString xmlns='http://tempuri.org/'&gt;"</span> <span class="o">+</span>
+                                    <span class="s2">"&lt;s&gt;123&lt;/s&gt;"</span> <span class="o">+</span>
+                                  <span class="s2">"&lt;/EchoString&gt;"</span> <span class="o">+</span>
+                                <span class="s2">"&lt;/Body&gt;"</span> <span class="o">+</span>
+                            <span class="s2">"&lt;/Envelope&gt;"</span>
+
+               <span class="p">,</span> <span class="nx">url</span><span class="o">:</span> <span class="s2">"http://localhost/service"</span>
+               <span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s2">"http://tempuri.org/EchoString"</span>
+               <span class="p">,</span> <span class="nx">contentType</span><span class="o">:</span> <span class="s2">"text/xml"</span> 
+               <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">handlers</span> <span class="o">=</span>  <span class="p">[</span> <span class="k">new</span> <span class="nx">Addr</span><span class="p">(</span><span class="s2">"http://schemas.xmlsoap.org/ws/2004/08/addressing"</span><span class="p">)</span>
+                    <span class="p">,</span> <span class="k">new</span> <span class="nx">Http</span><span class="p">()</span>
+                    <span class="p">]</span>
+
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">handlers</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>                    
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"response: "</span> <span class="o">+</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">})</span>
+</pre></div>
+
+<p>==&gt;</p>
+
+<div class="highlight"><pre>    <span class="nt">&lt;Envelope</span> <span class="na">xmlns=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="na">xmlns:ws=</span><span class="s">"http://schemas.xmlsoap.org/ws/2004/08/addressing"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;Header&gt;</span>
+        <span class="nt">&lt;ws:Action&gt;</span>http://tempuri.org/EchoString<span class="nt">&lt;/ws:Action&gt;</span>
+        <span class="nt">&lt;ws:To&gt;</span>http://server/wsa/<span class="nt">&lt;/ws:To&gt;</span>
+        <span class="nt">&lt;ws:MessageID&gt;</span>6c4189e5-60f5-195e-b7ce-4e236d63c379<span class="nt">&lt;/ws:MessageID&gt;</span>
+        <span class="nt">&lt;ws:ReplyTo&gt;</span>
+          <span class="nt">&lt;ws:Address&gt;</span>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous<span class="nt">&lt;/ws:Address&gt;</span>
+        <span class="nt">&lt;/ws:ReplyTo&gt;</span>
+      <span class="nt">&lt;/Header&gt;</span>
+      <span class="nt">&lt;Body&gt;</span>
+        <span class="nt">&lt;EchoString</span> <span class="na">xmlns=</span><span class="s">"http://tempuri.org/"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;s&gt;</span>123<span class="nt">&lt;/s&gt;</span>
+        <span class="nt">&lt;/EchoString&gt;</span>
+      <span class="nt">&lt;/Body&gt;</span>
+    <span class="nt">&lt;/Envelope&gt;</span>
+</pre></div>
+
+<h3>SSL</h3>
+
+<p>Just specify an http<strong>s</strong> address in any of the previous samples.</p>
+
+<h3>All together now</h3>
+
+<div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">ws</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'ws.js'</span><span class="p">)</span>
+      <span class="p">,</span> <span class="nx">Http</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Http</span>
+      <span class="p">,</span> <span class="nx">Addr</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Addr</span>
+      <span class="p">,</span> <span class="nx">Mtom</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Mtom</span>
+      <span class="p">,</span> <span class="nx">Security</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">Security</span>
+      <span class="p">,</span> <span class="nx">UsernameToken</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">UsernameToken</span>
+      <span class="p">,</span> <span class="nx">ctx</span> <span class="o">=</span>  <span class="p">{</span> <span class="nx">request</span><span class="o">:</span>   <span class="s2">"&lt;Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'&gt;"</span> <span class="o">+</span>
+                              <span class="s2">"&lt;Header /&gt;"</span> <span class="o">+</span>
+                                <span class="s2">"&lt;Body&gt;"</span> <span class="o">+</span>
+                                  <span class="s2">"&lt;EchoString xmlns='http://tempuri.org/'&gt;"</span> <span class="o">+</span>
+                                    <span class="s2">"&lt;File1 /&gt;"</span> <span class="o">+</span>
+                                  <span class="s2">"&lt;/EchoString&gt;"</span> <span class="o">+</span>
+                                <span class="s2">"&lt;/Body&gt;"</span> <span class="o">+</span>
+                            <span class="s2">"&lt;/Envelope&gt;"</span>
+
+               <span class="p">,</span> <span class="nx">url</span><span class="o">:</span> <span class="s2">"https://localhost/service"</span>
+               <span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s2">"http://tempuri.org/EchoString"</span>
+               <span class="p">,</span> <span class="nx">contentType</span><span class="o">:</span> <span class="s2">"text/xml"</span> 
+               <span class="p">}</span>
+
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">addAttachment</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s2">"request"</span><span class="p">,</span> <span class="s2">"//*[local-name(.)='File1']"</span><span class="p">,</span> 
+                      <span class="s2">"me.jpg"</span><span class="p">,</span> <span class="s2">"image/jpeg"</span><span class="p">)</span>
+
+    <span class="kd">var</span> <span class="nx">handlers</span> <span class="o">=</span>  <span class="p">[</span> <span class="k">new</span> <span class="nx">Security</span><span class="p">({},</span> <span class="p">[</span><span class="k">new</span> <span class="nx">UsernameToken</span><span class="p">({</span><span class="nx">username</span><span class="o">:</span> <span class="s2">"yaron"</span><span class="p">,</span> <span class="nx">password</span><span class="o">:</span> <span class="s2">"1234"</span><span class="p">})])</span>
+                    <span class="p">,</span> <span class="k">new</span> <span class="nx">Addr</span><span class="p">(</span><span class="s2">"http://ws-addressing/v8"</span><span class="p">)</span>
+                    <span class="p">,</span> <span class="k">new</span> <span class="nx">Mtom</span><span class="p">()</span> <span class="c1">//Mtom must be after everything except http</span>
+                    <span class="p">,</span> <span class="k">new</span> <span class="nx">Http</span><span class="p">()</span>
+                    <span class="p">]</span>
+
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">handlers</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>                    
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"response: "</span> <span class="o">+</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">})</span>
+</pre></div>
+
+<h3>License</h3>
+
+<p>This software is licensed udner the <strong>MIT license</strong>.</p>
+
+<p>Copyright (C) 2012 Yaron Naveh (<a href="mailto:yaronn01@gmail.com">mail</a>, <a href="http://webservices20.blogspot.com/">blog</a>)</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+<h3>More details</h3>
+
+<ul>
+<li><a href="http://webservices20.blogspot.com/">http://webservices20.blogspot.com/</a></li>
+<li>Or drop me an <a href="mailto:yaronn01@gmail.com">email</a>
+</li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
