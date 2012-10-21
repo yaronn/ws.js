@@ -8,7 +8,7 @@ A WS-* client stack for node.js. Written in pure javascript!
 * WS-Addressing (all versions)
 * HTTP(S)
 
-For more information visit [my blog](http://webservices20.blogspot.com/).
+For more information visit [my blog](http://webservices20.blogspot.com/) or [my twitter](https://twitter.com/YaronNaveh).
 
 ## Install
 Install with [npm](http://github.com/isaacs/npm):
