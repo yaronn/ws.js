@@ -1,14 +1,14 @@
 {
     "name": "ws.js",
-    "version": "0.0.15",
+    "version": "0.0.16",
     "description": "WS-* implementation for node",
     "engines": { "node": ">=0.4.0" },
     "author": "Yaron Naveh (yaronn01@gmail.com, http://webservices20.blogspot.com/)",
     "dependencies": {
         "bufferjs": ">= 1.0.2",
-        "formidable": ">=1.0.9",
+        "formidable": "=1.0.9",
         "request": ">=2.9.100",
-        "xmldom": ">=0.1.8",    
+        "xmldom": "=0.1.7",    
         "dateformat": ">=1.0.2-1.2.3",
         "xml-crypto": ">=0.0.4"    
      },
@@ -19,6 +19,9 @@
         "type":"git", 
         "url":"https://github.com/yaronn/ws-js.git" },
     "main": "./index.js",
+    "scripts": {
+        "test": "nodeunit ./test/unit ./test/unit/client"
+    },
     "directories": { "lib": "./lib" },
     "keywords": ["ws-security", "mtom", "ws-addressing", "ws-star", "ws-*", "web service standards", "wsdl", "soap"],
     "licenses": [{ 

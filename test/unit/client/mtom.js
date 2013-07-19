@@ -183,7 +183,7 @@ module.exports = {
     var ctx = { resp_contentType: 'multipart/related; type="application/xop+xml";start="<part0>";'
                     + 'boundary="my_unique_boundary";start-info="old/contentType"; action="myAction"'
                 //add \r\n in http multipart response the first chars seems to be #13#10
-             , response: Buffer.concat(new Buffer("\r\n"), fs.readFileSync("./test/unit/client/files/expected_writer_output.bin"))
+             , response: Buffer.concat([new Buffer("\r\n"), fs.readFileSync("./test/unit/client/files/expected_writer_output.bin")])
              }
 
     var m = new MtomHandler()
