@@ -337,3 +337,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ### More details
 * [http://webservices20.blogspot.com/](http://webservices20.blogspot.com/)
 * Or drop me an [email](mailto:yaronn01@gmail.com)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/yaronn/ws.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
