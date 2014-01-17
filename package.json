@@ -1,6 +1,6 @@
 {
     "name": "ws.js",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "description": "WS-* implementation for node",
     "engines": { "node": ">=0.4.0" },
     "author": "Yaron Naveh (yaronn01@gmail.com, http://webservices20.blogspot.com/)",
@@ -20,7 +20,7 @@
         "url":"https://github.com/yaronn/ws-js.git" },
     "main": "./index.js",
     "scripts": {
-        "test": "nodeunit ./test/unit ./test/unit/client"
+        "test": "nodeunit ./test/unit ./test/unit/client ./test/integration/client/signature.js"
     },
     "directories": { "lib": "./lib" },
     "keywords": ["ws-security", "mtom", "ws-addressing", "ws-star", "ws-*", "web service standards", "wsdl", "soap"],
