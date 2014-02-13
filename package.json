@@ -1,6 +1,6 @@
 {
     "name": "ws.js",
-    "version": "0.0.18",
+    "version": "0.0.19",
     "description": "WS-* implementation for node",
     "engines": { "node": ">=0.4.0" },
     "author": "Yaron Naveh (yaronn01@gmail.com, http://webservices20.blogspot.com/)",
