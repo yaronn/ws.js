@@ -167,13 +167,13 @@ ws.send(handlers, ctx, function(ctx) {
 
 **Notes:**
 
-By default incoming signatures are not validates. To validate these signatures when you create the security channel specify the validateResponseSignature parameter:
+By default incoming signatures are not validated. To validate these signatures when you create the security channel specify the validateResponseSignature parameter:
 
 `````javascript
 var sec = new ws.Security({"validateResponseSignature": true} ...
 `````
 
-Next specify the server certificate (the public key corresponding to the server private sgining key):
+Next specify the server certificate (the public key corresponding to the server private signing key):
 
 `````javascript
 sec.options.responseKeyInfoProvider = new FileKeyInfo("./examples/server_public.pem")
