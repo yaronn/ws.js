@@ -33,10 +33,10 @@ Install with [npm](http://github.com/isaacs/npm):
                         '</Body>' +
                     '</Envelope>'
 
-    var ctx =  { request: request 
+    var ctx =  { request: request
                , url: "http://service/security"
                , action: "http://tempuri.org/EchoString"
-               , contentType: "text/xml" 
+               , contentType: "text/xml"
                }
 
 
@@ -44,7 +44,7 @@ Install with [npm](http://github.com/isaacs/npm):
                     , new Http()
                     ]
 
-    ws.send(handlers, ctx, function(ctx) {                    
+    ws.send(handlers, ctx, function(ctx) {
       console.log("response: " + ctx.response);
     })
 `````
@@ -77,13 +77,13 @@ var ws = require('ws.js')
 , fs = require('fs')
 , sec = ws.Security
 , X509BinarySecurityToken = ws.X509BinarySecurityToken
-, FileKeyInfo = require('xml-crypto').FileKeyInfo  
+, FileKeyInfo = require('xml-crypto').FileKeyInfo
 
 var x509 = new X509BinarySecurityToken(
   { "key": fs.readFileSync("client.pem").toString()})
 var signature = new ws.Signature(x509)
-signature.addReference("//*[local-name(.)='Body']")    
-signature.addReference("//*[local-name(.)='Timestamp']")    
+signature.addReference("//*[local-name(.)='Body']")
+signature.addReference("//*[local-name(.)='Timestamp']")
 
 var sec = new ws.Security({}, [ x509, signature ])
 
@@ -107,10 +107,10 @@ var ctx =   { request: request
   , contentType: "text/xml"
 }
 
-ws.send(handlers, ctx, function(ctx) {                    
+ws.send(handlers, ctx, function(ctx) {
   console.log("status " + ctx.statusCode)
   console.log("messagse " + ctx.response)
-})  
+})
 `````
 
 ==>
@@ -167,13 +167,13 @@ ws.send(handlers, ctx, function(ctx) {
 
 **Notes:**
 
-By default incoming signatures are not validates. To validate these signatures when you create the security channel specify the validateResponseSignature parameter:
+By default incoming signatures are not validated. To validate these signatures when you create the security channel specify the validateResponseSignature parameter:
 
 `````javascript
 var sec = new ws.Security({"validateResponseSignature": true} ...
 `````
 
-Next specify the server certificate (the public key corresponding to the server private sgining key):
+Next specify the server certificate (the public key corresponding to the server private signing key):
 
 `````javascript
 sec.options.responseKeyInfoProvider = new FileKeyInfo("./examples/server_public.pem")
@@ -181,7 +181,7 @@ sec.options.responseKeyInfoProvider = new FileKeyInfo("./examples/server_public.
 
 In the future the server certificate will be extracted from the BinarySecurityToken automatically (when available).
 
-### MTOM    
+### MTOM
 `````javascript
     var ws = require('ws.js')
       , Http = ws.Http
@@ -189,12 +189,12 @@ In the future the server certificate will be extracted from the BinarySecurityTo
 
     var request = '<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope">' +
                     '<s:Body>' +
-                      '<EchoFiles xmlns="http://tempuri.org/">' +                        
+                      '<EchoFiles xmlns="http://tempuri.org/">' +
                           '<File1 />' +
                       '</EchoFiles>' +
                     '</s:Body>' +
-                  '</s:Envelope>'   
-    
+                  '</s:Envelope>'
+
     var ctx = { request: request
               , contentType: "application/soap+xml"
               , url: "http://localhost:7171/Service/mtom"
@@ -202,17 +202,17 @@ In the future the server certificate will be extracted from the BinarySecurityTo
               }
 
     //add attachment to the soap request
-    ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']", 
+    ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']",
                     "me.jpg", "image/jpeg")
-    
+
     var handlers =  [ new Mtom()
                     , new Http()
                     ];
-    
-    ws.send(handlers, ctx, function(ctx) {      
+
+    ws.send(handlers, ctx, function(ctx) {
       //read an attachment from the soap response
       var file = ws.getAttachment(ctx, "response", "//*[local-name(.)='File1']")
-      fs.writeFileSync("result.jpg", file)      
+      fs.writeFileSync("result.jpg", file)
     })
 `````
 ==>
@@ -255,14 +255,14 @@ In the future the server certificate will be extracted from the BinarySecurityTo
 
                , url: "http://localhost/service"
                , action: "http://tempuri.org/EchoString"
-               , contentType: "text/xml" 
+               , contentType: "text/xml"
                }
 
     var handlers =  [ new Addr("http://schemas.xmlsoap.org/ws/2004/08/addressing")
                     , new Http()
                     ]
 
-    ws.send(handlers, ctx, function(ctx) {                    
+    ws.send(handlers, ctx, function(ctx) {
       console.log("response: " + ctx.response);
     })
 `````
@@ -287,6 +287,9 @@ In the future the server certificate will be extracted from the BinarySecurityTo
 ### SSL
 Just specify an http**s** address in any of the previous samples.
 
+### Through a proxy
+Just add a `proxy: "http://proxyserver.com:1234"` option to `ctx` in any of the previous samples.
+
 ### All together now
 `````javascript
     var ws = require('ws.js')
@@ -306,10 +309,10 @@ Just specify an http**s** address in any of the previous samples.
 
                , url: "https://localhost/service"
                , action: "http://tempuri.org/EchoString"
-               , contentType: "text/xml" 
+               , contentType: "text/xml"
                }
 
-    ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']", 
+    ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']",
                       "me.jpg", "image/jpeg")
 
     var handlers =  [ new Security({}, [new UsernameToken({username: "yaron", password: "1234"})])
@@ -318,7 +321,7 @@ Just specify an http**s** address in any of the previous samples.
                     , new Http()
                     ]
 
-    ws.send(handlers, ctx, function(ctx) {                    
+    ws.send(handlers, ctx, function(ctx) {
       console.log("response: " + ctx.response);
     })
 `````
