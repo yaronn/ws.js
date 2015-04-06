@@ -10,7 +10,7 @@ request = "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
           "</Envelope>"
 
 var ctx =  { request: request
-           , url: "http://localhost:7171/Service/soap11wsa0408"
+           , url: "http://localhost:7171/Service/soap11wsa0408" //can also send to www.google.com if just testing the pipeline
            , action: "http://tempuri.org/IService/GetData"
            , contentType: "text/xml" 
            }
