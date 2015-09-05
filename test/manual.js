@@ -5,11 +5,11 @@ var ws = require('../lib/ws.js')
 
 function testSimple() {
 
-  var handlers =  [ 
+  var handlers =  [
   new Http()
   ]
 
-  ws.send(handlers, ctx, function(ctx) {                    
+  ws.send(handlers, ctx, function(ctx) {
     console.log("*** simple")
     console.log(ctx.response);
   })
@@ -20,30 +20,30 @@ function testAddressing() {
 
   var handlers =  [
   new ws.Addr("http://schemas.xmlsoap.org/ws/2004/08/addressing"),
-  new ws.Http()         
+  new ws.Http()
   ];
   ctx.url = "http://localhost:7171/Service/soap11wsa0408"
 
-  ws.send(handlers, ctx, function(ctx) {                    
-    console.log("\r\n\r\n")            
+  ws.send(handlers, ctx, function(ctx) {
+    console.log("\r\n\r\n")
     console.log("*** addressing")
-    console.log(ctx.response);      
+    console.log(ctx.response);
   })
 
 }
 
 function testSecurity() {
 
-  var handlers =  [     
-  new ws.Security({}, [new ws.UsernameToken({username: "yaron", password: "1234"})]),      
-  new ws.Http()         
+  var handlers =  [
+  new ws.Security({}, [new ws.UsernameToken({username: "yaron", password: "1234"})]),
+  new ws.Http()
   ];
   ctx.url = "http://localhost:7171/Service/clearUsername"
 
-  ws.send(handlers, ctx, function(ctx) {                    
-    console.log("\r\n\r\n")            
+  ws.send(handlers, ctx, function(ctx) {
+    console.log("\r\n\r\n")
     console.log("*** security")
-    console.log(ctx.response);      
+    console.log(ctx.response);
   })
 }
 
@@ -60,24 +60,24 @@ function testMtom() {
   '</value>' +
   '</EchoFiles>' +
   '</s:Body>' +
-  '</s:Envelope>'   
+  '</s:Envelope>'
 
   var ctx = { request: request
     , contentType: "application/soap+xml"
     , url: "http://localhost:7171/Service/mtom"
     , action: "http://tempuri.org/IService/EchoFiles"
   }
-  ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']", 
+  ws.addAttachment(ctx, "request", "//*[local-name(.)='File1']",
   "c:/temp/p.jpg", "image/jpeg")
-  ws.addAttachment(ctx, "request", "//*[local-name(.)='File2']", 
+  ws.addAttachment(ctx, "request", "//*[local-name(.)='File2']",
   "c:/temp/p.jpg", "text/xml")
   var handlers =  [ new ws.Mtom()
   , new ws.Http()
   ];
   ws.send(handlers, ctx, function(ctx) {
-    console.log("\r\n\r\n")            
+    console.log("\r\n\r\n")
     console.log("*** mtom")
-    //console.log(ctx.response); 
+    //console.log(ctx.response);
 
     var attach = ws.getAttachment(ctx, "response", "//*[local-name(.)='File1']")
     fs.writeFileSync("c:/temp/res.jpg", attach);
@@ -94,10 +94,10 @@ var request = "<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>" +
 "</Body>" +
 "</Envelope>"
 
-var ctx =  { request: request 
+var ctx =  { request: request
  , url: "http://localhost:7171/Service/simple-soap"
  , action: "http://tempuri.org/IService/GetData"
- , contentType: "text/xml" 
+ , contentType: "text/xml"
 }
 
 testSimple();
