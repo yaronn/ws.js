@@ -1,7 +1,7 @@
-exports.soapTest = function(test, proxy, validator) {	
-  var version = proxy.binding.getCustomBinding().getContentType()	
-  , ns = version=="text/xml" ? 
-    "http://schemas.xmlsoap.org/soap/envelope/" : 
+exports.soapTest = function(test, proxy, validator) {
+  var version = proxy.binding.getCustomBinding().getContentType()
+  , ns = version=="text/xml" ?
+    "http://schemas.xmlsoap.org/soap/envelope/" :
     "http://www.w3.org/2003/05/soap-envelope"
   , message = "<Envelope xmlns='"+ns+"'>" +
                 "<Header />" +

@@ -34,7 +34,7 @@ namespace webservices20.blogspot.com
             Console.WriteLine();
             Console.WriteLine();
 
-            
+
             Console.WriteLine("Opening service...\r\n");
             try
             {
@@ -44,7 +44,7 @@ namespace webservices20.blogspot.com
                     PrintEndpoints(host);
 
                     NotifyHostOnStart();
-                    
+
                     Console.WriteLine("\nPress enter to close service...\n");
                     Console.ReadLine();
                 }
@@ -53,7 +53,7 @@ namespace webservices20.blogspot.com
             {
                 Console.WriteLine(String.Format("Error: {0} \r\n {1}", e.Message, e.StackTrace));
                 Console.ReadLine();
-            }            
+            }
 
         }
 

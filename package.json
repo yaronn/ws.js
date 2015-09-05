@@ -8,15 +8,15 @@
         "bufferjs": ">= 1.0.2",
         "formidable": "=1.0.9",
         "request": ">=2.9.100",
-        "xmldom": "=0.1.7",    
+        "xmldom": "=0.1.7",
         "dateformat": ">=1.0.2-1.2.3",
-        "xml-crypto": ">=0.0.4"    
+        "xml-crypto": ">=0.0.4"
      },
      "devDependencies": {
         "nodeunit": ">=0.6.4"
      },
-    "repository" : { 
-        "type":"git", 
+    "repository" : {
+        "type":"git",
         "url":"https://github.com/yaronn/ws.js.git" },
     "main": "./index.js",
     "scripts": {
@@ -24,7 +24,7 @@
     },
     "directories": { "lib": "./lib" },
     "keywords": ["ws-security", "mtom", "ws-addressing", "ws-star", "ws-*", "web service standards", "wsdl", "soap"],
-    "licenses": [{ 
+    "licenses": [{
         "type" :  "MIT License",
         "url" :   "http://www.opensource.org/licenses/mit-license.php" }]
 }

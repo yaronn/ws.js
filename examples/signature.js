@@ -2,17 +2,17 @@ var ws = require('ws.js')
 , fs = require('fs')
 , sec = ws.Security
 , X509BinarySecurityToken = ws.X509BinarySecurityToken
-, FileKeyInfo = require('xml-crypto').FileKeyInfo  
+, FileKeyInfo = require('xml-crypto').FileKeyInfo
 
 
 var x509 = new X509BinarySecurityToken(
   { "key": fs.readFileSync("client.pem").toString()})
 var signature = new ws.Signature(x509)
-signature.addReference("//*[local-name(.)='Body']")    
-signature.addReference("//*[local-name(.)='Timestamp']")    
+signature.addReference("//*[local-name(.)='Body']")
+signature.addReference("//*[local-name(.)='Timestamp']")
 
-//validateResponseSignature determines if we should validate any incoming signature. 
-var sec = new ws.Security({"validateResponseSignature": true}, 
+//validateResponseSignature determines if we should validate any incoming signature.
+var sec = new ws.Security({"validateResponseSignature": true},
   [ x509,
   signature
   ])
@@ -20,7 +20,7 @@ var sec = new ws.Security({"validateResponseSignature": true},
 //only required if you specified validateResponseSignature as true
 sec.options.responseKeyInfoProvider = new FileKeyInfo("server_public.pem")
 
-var handlers =  
+var handlers =
   [ new ws.Addr("http://www.w3.org/2005/08/addressing")
   , sec
   , new ws.Http()
@@ -41,7 +41,7 @@ var ctx =   { request: request
   , contentType: "text/xml"
 }
 
-ws.send(handlers, ctx, function(ctx) {                    
+ws.send(handlers, ctx, function(ctx) {
   console.log("status " + ctx.statusCode)
   console.log("messagse " + ctx.response)
-})  
+})
