@@ -16,7 +16,6 @@ var END_CERT = "-----END CERTIFICATE-----"
 function SecurityClientHandler(options, tokens) {
   this.options = options || {}
   this.options.excludeTimestamp = this.options.excludeTimestamp || false
-  this.options.responseKeyInfoProvider = this.options.excludeTimestamp || null
   this.options.responseKeyInfoProvider = this.options.responseKeyInfoProvider || null
   this.options.validateResponseSignature = this.options.validateResponseSignature || false
 
