@@ -89,7 +89,7 @@ function SignatureValidator(keyInfoProvider) {
 
     if (!res) {
       console.log("signature not valid: " + sig.validationErrors)
-      throw "signature not valid: " + sig.validationErrors
+      throw new Error("signature not valid: " + sig.validationErrors)
     }
   }
 }
@@ -107,13 +107,13 @@ function WssKeyInfo(soap) {
     var doc = new Dom().parseFromString(keyInfo)
     var nodes = select(doc, "//@URI")
     if (nodes.length==0)
-      throw "could not find key in KeyInfo to use for validation"
+      throw new Error("could not find key in KeyInfo to use for validation")
     var uri = nodes[0]
 
     var xpath = "//*['" + uri + "' = @*[local-name(.)='Id' and namespace-uri(.)='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd']]"
     var nodes = select(doc, xpath)
     if (nodes.length==0)
-      throw "can not validate signature: could not find binary security token with id " + uri
+      throw new Error("can not validate signature: could not find binary security token with id " + uri)
 
     return BEGIN_CERT + nodes[0].data + END_CERT
   }
@@ -142,7 +142,7 @@ UsernameToken.prototype.applyMe = function(doc, security) {
 function X509BinarySecurityToken(options) {
   this.options = options
   if (!this.options.key)
-    throw "Cannot create an X509Token token without specifying a key in the options"
+    throw new Error("Cannot create an X509Token token without specifying a key in the options")
 }
 
 X509BinarySecurityToken.prototype.getKey = function() {
