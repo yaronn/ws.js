@@ -102,7 +102,7 @@ module.exports = {
               , contentType: "old/contentType"
               , action: "myAction"
               }
-    ctx.base64Elements = [{xpath: "//file1", contentType: 'type/attach1'}, {xpath: "//file2", contentType: 'type/attach2'}]
+    ctx.base64Elements = [{xpath: '//file1', contentType: 'type/attach1', content:'FILE_CONTENT1'}, {xpath: '//file2', contentType: 'type/attach2', content: 'FILE_CONTENT2'}]
     var Mock = function() {
       this.send = function(ctx) {
         //validate context
