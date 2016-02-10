@@ -35,7 +35,6 @@ module.exports = {
     ]
 
     var body = writer.build_multipart_body(parts, "my_unique_boundary")
-    fs.writeFileSync("/tmp/salida.bin", body);
     assert.deepEqual(fs.readFileSync("./test/unit/client/files/expected_writer_output.bin"),
                     body,
                     "multipart body different than expected")
