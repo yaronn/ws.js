@@ -22,13 +22,15 @@ module.exports = {
       {
         id: "id2",
         contentType: "application/octet-stream",
-        body: fs.readFileSync("./test/unit/client/files/p.jpg")
+        body: fs.readFileSync("./test/unit/client/files/p.jpg"),
+        attachment: true
       },
 
       {
         id: "id3",
         contentType: "text/plain",
-        body: fs.readFileSync("./test/unit/client/files/text.txt")
+        body: fs.readFileSync("./test/unit/client/files/text.txt"),
+        attachment: true
       }
     ]
 
@@ -102,7 +104,7 @@ module.exports = {
               , contentType: "old/contentType"
               , action: "myAction"
               }
-    ctx.base64Elements = [{xpath: "//file1", contentType: 'type/attach1'}, {xpath: "//file2", contentType: 'type/attach2'}]
+    ctx.base64Elements = [{xpath: '//file1', contentType: 'type/attach1', content:'FILE_CONTENT1'}, {xpath: '//file2', contentType: 'type/attach2', content: 'FILE_CONTENT2'}]
     var Mock = function() {
       this.send = function(ctx) {
         //validate context
