@@ -287,6 +287,18 @@ In the future the server certificate will be extracted from the BinarySecurityTo
 ### SSL
 Just specify an http**s** address in any of the previous samples.
 
+### HTTP Request options [Optional]
+
+Add any of the available http request options like timeout, proxy etc. while sending a ws request.
+List of all available options: [Request Options Callback](https://github.com/request/request#requestoptions-callback)
+Pass on the options as a JSON Object to constructor argument of Http handler as shown below:
+
+`````javascript
+
+var handlers =  [ new Addr("http://schemas.xmlsoap.org/ws/2004/08/addressing")
+                , new Http({timeout: 3000})
+                ]
+`````
 ### All together now
 `````javascript
     var ws = require('ws.js')
@@ -340,4 +352,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/yaronn/ws.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
