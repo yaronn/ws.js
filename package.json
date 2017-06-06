@@ -6,7 +6,7 @@
     "author": "Yaron Naveh (yaronn01@gmail.com, http://webservices20.blogspot.com/)",
     "dependencies": {
         "bufferjs": ">= 1.0.2",
-        "formidable": "=1.0.9",
+        "formidable": "=1.1.1",
         "request": ">=2.9.100",
         "xmldom": "=0.1.7",
         "dateformat": ">=1.0.2-1.2.3",
