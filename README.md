@@ -23,7 +23,9 @@ Install with [npm](http://github.com/isaacs/npm):
       , Http = ws.Http
       , Security = ws.Security
       , UsernameToken = ws.UsernameToken
-
+      
+    var authToken = new Buffer(user + ':' + pass).toString('base64');
+    
     var request =  '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' +
                       '<Header />' +
                         '<Body>' +
@@ -37,6 +39,7 @@ Install with [npm](http://github.com/isaacs/npm):
                , url: "http://service/security"
                , action: "http://tempuri.org/EchoString"
                , contentType: "text/xml"
+               , authorization: "Basic: "+authToken"
                }
 
 
