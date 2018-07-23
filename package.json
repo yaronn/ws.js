@@ -2,7 +2,9 @@
     "name": "ws.js",
     "version": "2.0.23",
     "description": "WS-* implementation for node",
-    "engines": { "node": ">=0.4.0" },
+    "engines": {
+        "node": ">=0.4.0"
+    },
     "author": "Yaron Naveh (yaronn01@gmail.com, http://webservices20.blogspot.com/)",
     "dependencies": {
         "bufferjs": ">= 1.0.2",
@@ -11,20 +13,35 @@
         "xmldom": "=0.1.7",
         "dateformat": ">=1.0.2-1.2.3",
         "xml-crypto": ">=0.0.4"
-     },
-     "devDependencies": {
+    },
+    "devDependencies": {
         "nodeunit": ">=0.6.4"
-     },
-    "repository" : {
-        "type":"git",
-        "url":"https://github.com/yaronn/ws.js.git" },
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yaronn/ws.js.git"
+    },
     "main": "./index.js",
     "scripts": {
         "test": "nodeunit ./test/unit ./test/unit/client ./test/integration/client/signature.js"
     },
-    "directories": { "lib": "./lib" },
-    "keywords": ["ws-security", "mtom", "ws-addressing", "ws-star", "ws-*", "web service standards", "wsdl", "soap"],
-    "licenses": [{
-        "type" :  "MIT License",
-        "url" :   "http://www.opensource.org/licenses/mit-license.php" }]
+    "directories": {
+        "lib": "./lib"
+    },
+    "keywords": [
+        "ws-security",
+        "mtom",
+        "ws-addressing",
+        "ws-star",
+        "ws-*",
+        "web service standards",
+        "wsdl",
+        "soap"
+    ],
+    "licenses": [
+        {
+            "type": "MIT License",
+            "url": "http://www.opensource.org/licenses/mit-license.php"
+        }
+    ]
 }
