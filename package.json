@@ -8,11 +8,11 @@
     "author": "Yaron Naveh (yaronn01@gmail.com, http://webservices20.blogspot.com/)",
     "dependencies": {
         "bufferjs": ">= 1.0.2",
+        "dateformat": ">=1.0.2-1.2.3",
         "formidable": "=1.1.1",
         "request": ">=2.9.100",
-        "xmldom": "=0.1.7",
-        "dateformat": ">=1.0.2-1.2.3",
-        "xml-crypto": ">=0.0.4"
+        "xml-crypto": ">=0.0.4",
+        "xmldom": "0.1.19"
     },
     "devDependencies": {
         "nodeunit": ">=0.6.4"
