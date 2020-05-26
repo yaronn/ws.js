@@ -39,7 +39,7 @@ Install with [npm](http://github.com/isaacs/npm):
                , url: "http://service/security"
                , action: "http://tempuri.org/EchoString"
                , contentType: "text/xml"
-               , authorization: "Basic: "+authToken"
+               , authorization: "Basic: "+authToken
                }
 
 
